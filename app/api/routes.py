@@ -1,0 +1,193 @@
+"""REST API routes for RAG learning skeleton."""
+
+from flask import Blueprint, request
+
+from app import config
+from app.rag.chunker import split_into_chunks
+from app.rag.embeddings import create_embeddings
+from app.rag.history import (
+    append_conversation_turn,
+    create_conversation,
+    list_conversations,
+    load_conversation_history,
+)
+from app.rag.loader import load_uploaded_pdf
+from app.rag.retriever import retrieve_top_k_chunks
+from app.rag.vectorstore import save_embeddings_and_vectorstore
+from app.llm.llm_service import generate_answer
+from app.api.response import error_response, success_response
+
+api_bp = Blueprint("api", __name__)
+
+@api_bp.get("/api/health")
+def health_check():
+    """Simple health endpoint for quick service checks."""
+    return success_response(data={"status": "ok"}, message="Service is healthy")
+
+
+@api_bp.get("/api/conversations")
+def get_conversations():
+    """List all conversation summaries."""
+    conversations = list_conversations()
+    return success_response(
+        data=conversations,
+        message="Conversation list fetched successfully",
+    )
+
+
+@api_bp.get("/api/conversations/<conversation_id>")
+def get_conversation_detail(conversation_id: str):
+    """Get full details of one conversation by id."""
+    try:
+        history = load_conversation_history(conversation_id=conversation_id)
+    except FileNotFoundError:
+        return error_response("Conversation not found.", 404)
+    except Exception as exc:
+        return error_response("Failed to load conversation", 500, details={"detail": str(exc)})
+
+    turns = history.get("turns", [])
+    sanitized_turns = []
+    for turn in turns:
+        sanitized_turn = dict(turn)
+        sanitized_turn.pop("context", None)
+        sanitized_turns.append(sanitized_turn)
+
+    history["turns"] = sanitized_turns
+
+    return success_response(data=history, message="Conversation detail fetched successfully")
+
+
+def _validate_pdf_file_upload():
+    """Validate multipart upload and return a PDF FileStorage object."""
+    uploaded_file = request.files.get("file")
+
+    if uploaded_file is None:
+        return None, error_response("Field 'file' is required.", 400)
+
+    if not uploaded_file.filename:
+        return None, error_response("Filename is required.", 400)
+
+    if not uploaded_file.filename.lower().endswith(".pdf"):
+        return None, error_response("Only PDF files are supported.", 400)
+
+    return uploaded_file, None
+
+
+@api_bp.post("/api/ingest/pdf")
+def ingest_pdf():
+    """
+    POST /ingest/pdf
+    Content-Type: multipart/form-data
+    Field: file (PDF)
+
+    Ingestion flow:
+    uploaded PDF -> load text -> chunk -> embed -> store in FAISS
+    """
+    uploaded_file, validation_error = _validate_pdf_file_upload()
+    if validation_error:
+        return validation_error
+
+    conversation_id = create_conversation(uploaded_file.filename or "uploaded.pdf")
+
+    documents = load_uploaded_pdf(uploaded_file)
+    chunks = split_into_chunks(
+        documents=documents,
+        chunk_size=config.CHUNK_SIZE,
+        chunk_overlap=config.CHUNK_OVERLAP,
+    )
+
+    chunk_texts = [chunk.get("text", "") for chunk in chunks]
+    vectors = create_embeddings(chunk_texts)
+
+    store_info = save_embeddings_and_vectorstore(
+        documents=chunks,
+        vectors=vectors,
+        persist_dir=config.VECTORSTORE_DIR,
+    )
+
+    return success_response(
+        data={
+            "conversation_id": conversation_id,
+            "documents": len(documents),
+            "chunks": len(chunks),
+        },
+        message="PDF ingestion completed successfully",
+    )
+
+
+@api_bp.post("/api/ask")
+def ask_question():
+    """
+    POST /ask
+    Request: {"question": "string"}
+    Response: {"answer": "string", "context": []}
+
+    Learning flow (skeleton only):
+    User question -> embedding -> similarity search -> retrieve top-k chunks -> send to LLM -> return answer
+    """
+    payload = request.get_json(silent=True)
+    if not isinstance(payload, dict):
+        return error_response("Invalid JSON body.", 400)
+
+    question = payload.get("question")
+    conversation_id = payload.get("conversation_id")
+
+    if not isinstance(question, str) or not question.strip():
+        return error_response("Field 'question' is required and must be a non-empty string.", 400)
+
+    question = question.strip()
+
+    # conversation_id is optional: if missing, use latest conversation.
+    if isinstance(conversation_id, str) and conversation_id.strip():
+        conversation_id = conversation_id.strip()
+    else:
+        conversations = list_conversations()
+        if not conversations:
+            return error_response(
+                "No conversation found. Please ingest a PDF first via POST /api/ingest/pdf.",
+                400,
+            )
+        conversation_id = str(conversations[0].get("conversation_id"))
+
+    # RAG step 1-3:
+    # User question -> embedding -> similarity search -> retrieve top-k chunks
+    try:
+        context_chunks = retrieve_top_k_chunks(question=question, top_k=config.TOP_K)
+    except FileNotFoundError:
+        return error_response(
+            "Vector store not found. Please ingest a PDF first via POST /api/ingest/pdf.",
+            400,
+        )
+    except Exception as exc:
+        return error_response("Retrieval failed", 500, details={"detail": str(exc)})
+
+    # RAG step 4-5:
+    # send top-k context + question to LLM -> return generated answer
+    try:
+        answer = generate_answer(question=question, context_chunks=context_chunks)
+    except Exception as exc:
+        return error_response("LLM generation failed", 500, details={"detail": str(exc)})
+
+    try:
+        turn = append_conversation_turn(
+            conversation_id=conversation_id,
+            question=question,
+            answer=answer,
+            context=context_chunks,
+        )
+    except FileNotFoundError:
+        return error_response(
+            "Conversation not found. Please ingest a PDF first to create a conversation.",
+            400,
+        )
+    except Exception as exc:
+        return error_response("Failed to persist conversation history", 500, details={"detail": str(exc)})
+
+    return success_response(
+        data={
+            "conversation_id": conversation_id,
+            "turn_id": turn.get("turn_id"),
+            "answer": answer,
+        },
+        message="Answer generated successfully",
+    )
