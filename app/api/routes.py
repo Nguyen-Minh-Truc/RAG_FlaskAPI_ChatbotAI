@@ -1,5 +1,7 @@
 """REST API routes for RAG learning skeleton."""
 
+from pathlib import Path
+
 from flask import Blueprint, request
 
 from app import config
@@ -8,10 +10,12 @@ from app.rag.embeddings import create_embeddings
 from app.rag.history import (
     append_conversation_turn,
     create_conversation,
+    delete_all_conversations,
+    delete_conversation,
     list_conversations,
     load_conversation_history,
 )
-from app.rag.loader import load_uploaded_pdf
+from app.rag.loader import SUPPORTED_UPLOAD_EXTENSIONS, load_uploaded_document
 from app.rag.retriever import retrieve_top_k_chunks
 from app.rag.vectorstore import save_embeddings_and_vectorstore
 from app.llm.llm_service import generate_answer
@@ -57,8 +61,39 @@ def get_conversation_detail(conversation_id: str):
     return success_response(data=history, message="Conversation detail fetched successfully")
 
 
-def _validate_pdf_file_upload():
-    """Validate multipart upload and return a PDF FileStorage object."""
+@api_bp.delete("/api/conversations/<conversation_id>")
+def remove_conversation(conversation_id: str):
+    """Delete one conversation history by id."""
+    try:
+        deleted = delete_conversation(conversation_id)
+    except Exception as exc:
+        return error_response("Failed to delete conversation", 500, details={"detail": str(exc)})
+
+    if not deleted:
+        return error_response("Conversation not found.", 404)
+
+    return success_response(
+        data={"conversation_id": conversation_id},
+        message="Conversation deleted successfully",
+    )
+
+
+@api_bp.delete("/api/conversations")
+def remove_all_conversations():
+    """Delete all conversation histories."""
+    try:
+        deleted_count = delete_all_conversations()
+    except Exception as exc:
+        return error_response("Failed to delete all conversations", 500, details={"detail": str(exc)})
+
+    return success_response(
+        data={"deleted": deleted_count},
+        message="All conversations deleted successfully",
+    )
+
+
+def _validate_upload_file():
+    """Validate multipart upload and return a supported file object."""
     uploaded_file = request.files.get("file")
 
     if uploaded_file is None:
@@ -67,29 +102,36 @@ def _validate_pdf_file_upload():
     if not uploaded_file.filename:
         return None, error_response("Filename is required.", 400)
 
-    if not uploaded_file.filename.lower().endswith(".pdf"):
-        return None, error_response("Only PDF files are supported.", 400)
+    extension = Path(uploaded_file.filename).suffix.lower()
+    if extension not in SUPPORTED_UPLOAD_EXTENSIONS:
+        allowed = ", ".join(sorted(SUPPORTED_UPLOAD_EXTENSIONS))
+        return None, error_response(f"Unsupported file type. Allowed: {allowed}", 400)
 
     return uploaded_file, None
 
 
-@api_bp.post("/api/ingest/pdf")
+@api_bp.post("/api/upload")
 def ingest_pdf():
     """
-    POST /ingest/pdf
+    POST /upload
     Content-Type: multipart/form-data
-    Field: file (PDF)
+    Field: file (PDF/DOC/DOCX)
 
     Ingestion flow:
-    uploaded PDF -> load text -> chunk -> embed -> store in FAISS
+    uploaded file -> load text -> chunk -> embed -> store in FAISS
     """
-    uploaded_file, validation_error = _validate_pdf_file_upload()
+    uploaded_file, validation_error = _validate_upload_file()
     if validation_error:
         return validation_error
 
     conversation_id = create_conversation(uploaded_file.filename or "uploaded.pdf")
 
-    documents = load_uploaded_pdf(uploaded_file)
+    try:
+        documents = load_uploaded_document(uploaded_file)
+    except ValueError as exc:
+        return error_response(str(exc), 400)
+    except Exception as exc:
+        return error_response("Failed to parse uploaded file", 500, details={"detail": str(exc)})
     chunks = split_into_chunks(
         documents=documents,
         chunk_size=config.CHUNK_SIZE,

@@ -111,3 +111,24 @@ def list_conversations() -> list[dict]:
 
     summaries.sort(key=lambda item: int(str(item.get("conversation_id", "0"))), reverse=True)
     return summaries
+
+
+def delete_conversation(conversation_id: str) -> bool:
+    """Delete one conversation by id. Return True if deleted, False if not found."""
+    path = _conversation_path(conversation_id)
+    if not path.exists():
+        return False
+
+    path.unlink()
+    return True
+
+
+def delete_all_conversations() -> int:
+    """Delete all conversation files and return deleted file count."""
+    deleted_count = 0
+    for path in _history_dir().glob("*.json"):
+        if path.is_file():
+            path.unlink()
+            deleted_count += 1
+
+    return deleted_count
