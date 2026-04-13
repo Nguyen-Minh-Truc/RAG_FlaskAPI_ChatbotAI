@@ -4,7 +4,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 1,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 0,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -15,7 +15,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 1,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 1,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -26,7 +26,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 1,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 2,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -37,7 +37,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 1,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 3,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -48,7 +48,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 2,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 0,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -59,7 +59,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 2,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 1,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -70,7 +70,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 2,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 2,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -81,7 +81,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 2,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 3,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -92,7 +92,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 2,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 4,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -103,7 +103,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 3,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 0,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -114,7 +114,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 3,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 1,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -125,7 +125,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 4,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 0,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -136,7 +136,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 4,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 1,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -147,7 +147,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 4,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 2,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -158,7 +158,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 5,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 0,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -169,7 +169,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 5,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 1,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -180,7 +180,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 5,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 2,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -191,7 +191,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 5,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 3,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -202,7 +202,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 6,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 0,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -213,7 +213,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 6,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 1,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -224,7 +224,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 6,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 2,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -235,7 +235,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 6,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 3,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -246,7 +246,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 7,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 0,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -257,7 +257,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 7,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 1,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -268,7 +268,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 7,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 2,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -279,7 +279,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 7,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 3,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -290,7 +290,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 8,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 0,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -301,7 +301,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 8,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 1,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -312,7 +312,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 8,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 2,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -323,7 +323,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 8,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 3,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -334,7 +334,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 9,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 0,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -345,7 +345,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 9,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 1,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -356,7 +356,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 9,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 2,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -367,7 +367,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 10,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 0,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -378,7 +378,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 10,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 1,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -389,7 +389,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 10,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 2,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -400,7 +400,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 10,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 3,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -411,7 +411,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 11,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 0,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -422,7 +422,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 11,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 1,
       "chunk_size": 1000,
       "chunk_overlap": 100
@@ -433,7 +433,7 @@
     "metadata": {
       "source": "attention-is-all-you-need-1hodz0wcqb.pdf",
       "page": 11,
-      "content_type": "application/pdf",
+      "content_type": "application/octet-stream",
       "chunk_index": 2,
       "chunk_size": 1000,
       "chunk_overlap": 100

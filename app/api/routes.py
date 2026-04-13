@@ -5,6 +5,7 @@ from pathlib import Path
 from flask import Blueprint, request
 
 from app import config
+from app.corag.pipeline import generate_corag_answer
 from app.rag.chunker import split_into_chunks
 from app.rag.embeddings import create_embeddings
 from app.rag.history import (
@@ -131,7 +132,28 @@ def ingest_pdf():
     except ValueError as exc:
         return error_response(str(exc), 400)
     except Exception as exc:
-        return error_response("Failed to parse uploaded file", 500, details={"detail": str(exc)})
+        extension = Path(uploaded_file.filename or "").suffix.lower() or "unknown"
+        return error_response(
+            "Failed to parse uploaded file",
+            500,
+            details={
+                "detail": str(exc),
+                "filename": uploaded_file.filename,
+                "extension": extension,
+                "hint": "With .doc/.docx files, make sure parser dependencies are installed; with scanned PDFs, OCR may be required.",
+            },
+        )
+
+    if not documents:
+        return error_response(
+            "Failed to parse uploaded file",
+            400,
+            details={
+                "detail": "No readable text was extracted from the uploaded file.",
+                "filename": uploaded_file.filename,
+                "hint": "Try another file, export as text-based PDF/DOCX, or run OCR first if the file is image-only.",
+            },
+        )
     chunks = split_into_chunks(
         documents=documents,
         chunk_size=config.CHUNK_SIZE,
@@ -173,9 +195,13 @@ def ask_question():
 
     question = payload.get("question")
     conversation_id = payload.get("conversation_id")
+    corag_rounds = payload.get("corag_rounds", 3)
 
     if not isinstance(question, str) or not question.strip():
         return error_response("Field 'question' is required and must be a non-empty string.", 400)
+
+    if not isinstance(corag_rounds, int):
+        return error_response("Field 'corag_rounds' must be an integer.", 400)
 
     question = question.strip()
 
@@ -186,7 +212,7 @@ def ask_question():
         conversations = list_conversations()
         if not conversations:
             return error_response(
-                "No conversation found. Please ingest a PDF first via POST /api/ingest/pdf.",
+                "No conversation found. Please upload a file first via POST /api/upload.",
                 400,
             )
         conversation_id = str(conversations[0].get("conversation_id"))
@@ -197,7 +223,7 @@ def ask_question():
         context_chunks = retrieve_top_k_chunks(question=question, top_k=config.TOP_K)
     except FileNotFoundError:
         return error_response(
-            "Vector store not found. Please ingest a PDF first via POST /api/ingest/pdf.",
+            "Vector store not found. Please upload a file first via POST /api/upload.",
             400,
         )
     except Exception as exc:
@@ -206,20 +232,31 @@ def ask_question():
     # RAG step 4-5:
     # send top-k context + question to LLM -> return generated answer
     try:
-        answer = generate_answer(question=question, context_chunks=context_chunks)
+        rag_answer = generate_answer(question=question, context_chunks=context_chunks)
     except Exception as exc:
-        return error_response("LLM generation failed", 500, details={"detail": str(exc)})
+        return error_response("RAG generation failed", 500, details={"detail": str(exc)})
+
+    try:
+        corag_answer, _, corag_trace = generate_corag_answer(
+            question=question,
+            base_chunks=context_chunks,
+            base_answer=rag_answer,
+            rounds=corag_rounds,
+        )
+    except Exception as exc:
+        return error_response("Co-RAG generation failed", 500, details={"detail": str(exc)})
 
     try:
         turn = append_conversation_turn(
             conversation_id=conversation_id,
             question=question,
-            answer=answer,
+            answer=rag_answer,
+            corag_answer=corag_answer,
             context=context_chunks,
         )
     except FileNotFoundError:
         return error_response(
-            "Conversation not found. Please ingest a PDF first to create a conversation.",
+            "Conversation not found. Please upload a file first to create a conversation.",
             400,
         )
     except Exception as exc:
@@ -229,7 +266,9 @@ def ask_question():
         data={
             "conversation_id": conversation_id,
             "turn_id": turn.get("turn_id"),
-            "answer": answer,
+            "rag_answer": rag_answer,
+            "corag_answer": corag_answer,
+            "corag_trace": corag_trace,
         },
-        message="Answer generated successfully",
+        message="RAG and Co-RAG answers generated successfully",
     )

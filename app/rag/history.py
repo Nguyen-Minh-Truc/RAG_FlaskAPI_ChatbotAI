@@ -64,6 +64,7 @@ def append_conversation_turn(
     conversation_id: str,
     question: str,
     answer: str,
+    corag_answer: str | None,
     context: list[dict],
 ) -> dict:
     """Append one Q&A turn into an existing conversation."""
@@ -75,6 +76,7 @@ def append_conversation_turn(
         "timestamp": _utc_now_iso(),
         "question": question,
         "answer": answer,
+        "corag_answer": corag_answer,
         "context": context,
     }
 
