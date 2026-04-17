@@ -54,7 +54,7 @@ pip install -r requirements.txt
 ### 4.3 Tai model Ollama
 
 ```bash
-ollama pull qwen2.5:7b
+ollama pull qwen2.5:5b
 ```
 
 ### 4.4 Cai spaCy model (bat buoc cho parser DOC/DOCX trong mot so truong hop)

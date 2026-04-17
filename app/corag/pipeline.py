@@ -5,7 +5,7 @@ from app.llm.llm_service import generate_corag_refined_answer
 from app.rag.retriever import retrieve_top_k_chunks
 
 
-DEFAULT_CORAG_ROUNDS = 3
+DEFAULT_CORAG_ROUNDS = 1
 
 
 def _dedupe_and_rank(chunks: list[dict], limit: int) -> list[dict]:

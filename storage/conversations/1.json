@@ -1,0 +1,42 @@
+{
+  "conversation_id": "1",
+  "upload_filename": "2_001_C25TAA_41937_9259.pdf",
+  "created_at": "2026-04-15T09:41:19.052970+00:00",
+  "updated_at": "2026-04-15T09:41:44.063526+00:00",
+  "turn_count": 1,
+  "turns": [
+    {
+      "turn_id": 1,
+      "timestamp": "2026-04-15T09:41:44.060187+00:00",
+      "question": "đây là tài liệu gì",
+      "answer": "Đây là hóa đơn bán hàng của Trường Đại học Sài Gòn.",
+      "corag_answer": "Đây là hóa đơn bán hàng của Trường Đại học Sài Gòn.",
+      "context": [
+        {
+          "text": "TRƯỜNG ĐẠI HỌC SÀI GÒN\n0304151586\n \n \nNGUYỄN MINH TRỰC\n \n \n \n \nHình thức thanh toán \n(Method of payment)\n:\nTM/CK\n \nĐơn vị nhận, truyền và cung cấp giải pháp hóa đơn điện tử: Tập đoàn Bưu chính Viễn thông Việt Nam (VNPT), Điện thoại: 1800.1260\nHÓA ĐƠN BÁN HÀNG \n(SALES INVOICE)\nNgày \n(date)\n29\n \n  tháng \n(month)\n08\n \n  năm \n(year)\n2025\nMã của cơ quan thuế:\n0043C793272065432FB4D7A6E7F3F440EB\nKý hiệu \n(Series)\n: \n2C25TAA\nSố \n(Invoice No)\n: \n00041937\nTên đơn vị bán hàng \n(ComName)\n:\nMã số thuế \n(Tax code)\n:\nĐịa chỉ \n(Address)\n:\n273 An Dương Vương, Phường Chợ Quán, Thành phố Hồ Chí Minh\nSố tài khoản \n(BankNo)\n:\nNgân hàng \n(BankName)\n:\nHọ tên người mua hàng \n(Buyer)\n:\nTên đơn vị mua hàng \n(CusName)\n:\nMã số thuế \n(Tax code)\n:\nMã đơn vị quan hệ ngân sách:\nĐịa chỉ \n(Address)\n:\nDCT1226\nSố tài khoản \n(AC No)\n:\nNgân hàng \n(BankName)\n:\n(Cần kiểm tra, đối chiếu khi lập, giao nhận hóa đơn)\nTra cứu thông tin và in hóa đơn tại: \nhttps:daihocsaigon-tt78.vnpt-invoice.com.vn\n. Mã tra cứu:",
+          "score": 0.38143664598464966,
+          "metadata": {
+            "source": "2_001_C25TAA_41937_9259.pdf",
+            "page": 1,
+            "content_type": "application/octet-stream",
+            "chunk_index": 0,
+            "chunk_size": 1000,
+            "chunk_overlap": 100
+          }
+        },
+        {
+          "text": "Tra cứu thông tin và in hóa đơn tại: \nhttps:daihocsaigon-tt78.vnpt-invoice.com.vn\n. Mã tra cứu: \n92592001C25TAA41937772314\nThu Học Phí HK 1 (2025-2026)\n8.720.000\nSố tiền viết bằng chữ \n(Total amount in words)\n:\nTám triệu, bảy trăm hai mươi nghìn đồng\nSTT \n(No.)\nTên hàng hóa, dịch vụ \n(Description)\nĐơn vị tính \n(Unit)\nSố lượng \n(Quantity)\nĐơn giá \n(Unit price)\nThành tiền \n(Total Amount)\n1\n2\n3\n4\n5\n6=4x5\n1\nHK\n1\n8.720.000\n8.720.000\nTổng tiền thanh toán \n(Total Amount)\n:\nNgười mua hàng \n(Buyer)\nCơ quan thuế \n(Tax authorities)\nSignature Valid\nKý bởi: \nCN=CỤC THUẾ,O=BỘ TÀI CHÍNH,L=Hà\nNội,C=VN\nKý ngày: \n29/08/2025 17:56:52\nNgười bán hàng \n(Seller)\nSignature Valid\nKý bởi: \nTRƯỜNG ĐẠI HỌC SÀI GÒN\nKý ngày: \n29/08/2025 17:55:37",
+          "score": 0.35297250747680664,
+          "metadata": {
+            "source": "2_001_C25TAA_41937_9259.pdf",
+            "page": 1,
+            "content_type": "application/octet-stream",
+            "chunk_index": 1,
+            "chunk_size": 1000,
+            "chunk_overlap": 100
+          }
+        }
+      ]
+    }
+  ]
+}

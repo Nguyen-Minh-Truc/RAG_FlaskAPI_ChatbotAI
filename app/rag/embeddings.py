@@ -1,10 +1,13 @@
 """Embedding stage for RAG."""
 
+from functools import lru_cache
+
 from sentence_transformers import SentenceTransformer
 
 from app import config
 
 
+@lru_cache(maxsize=1)
 def _get_embedding_model() -> SentenceTransformer:
     """Create the shared SentenceTransformer embedding model instance."""
     return SentenceTransformer(config.EMBEDDING_MODEL)

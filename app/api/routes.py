@@ -195,7 +195,7 @@ def ask_question():
 
     question = payload.get("question")
     conversation_id = payload.get("conversation_id")
-    corag_rounds = payload.get("corag_rounds", 3)
+    corag_rounds = payload.get("corag_rounds", 1)
 
     if not isinstance(question, str) or not question.strip():
         return error_response("Field 'question' is required and must be a non-empty string.", 400)

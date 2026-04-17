@@ -1,0 +1,93 @@
+{
+  "conversation_id": "2",
+  "upload_filename": "research_paper_social_media_mental_health.pdf",
+  "created_at": "2026-04-15T09:42:03.985870+00:00",
+  "updated_at": "2026-04-15T09:43:29.316068+00:00",
+  "turn_count": 4,
+  "turns": [
+    {
+      "turn_id": 1,
+      "timestamp": "2026-04-15T09:42:11.690100+00:00",
+      "question": "đây là tài liệu gì",
+      "answer": "Đây là một báo cáo nghiên cứu về tác động của mạng xã hội đối với sức khỏe tâm lý trong thanh thiếu niên.",
+      "corag_answer": "Đây là một báo cáo nghiên cứu về tác động của mạng xã hội đối với sức khỏe tâm lý trong thanh thiếu niên. Ngữ cảnh mới đã được sử dụng để bổ sung thêm thông tin về mục tiêu và phương pháp nghiên cứu, giúp câu trả lời trở nên đầy đủ hơn.",
+      "context": [
+        {
+          "text": "The Impact of Social Media on Mental Health Among\n Young Adults\nAbstract: This research investigates the impact of social media on mental health among young adults.\nIntroduction: Social media platforms have become integral to daily life, especially among younger\npopulations.\nMethodology: A mixed-method approach including surveys and interviews was used to collect data.\nResults: Excessive usage correlates with increased anxiety and depression levels.\nConclusion: Balanced usage and awareness are essential to mitigate negative mental health effects.",
+          "score": -0.014998153783380985,
+          "metadata": {
+            "source": "research_paper_social_media_mental_health.pdf",
+            "page": 1,
+            "content_type": "application/octet-stream",
+            "chunk_index": 0,
+            "chunk_size": 1000,
+            "chunk_overlap": 100
+          }
+        }
+      ]
+    },
+    {
+      "turn_id": 2,
+      "timestamp": "2026-04-15T09:42:29.442831+00:00",
+      "question": "phong nha",
+      "answer": "Không tìm thấy thông tin trong tài liệu đã nạp.",
+      "corag_answer": "Nội dung trả lời: \nPhòng nha là một địa điểm đặc biệt trong văn hóa và xã hội Việt Nam. Nó thường được sử dụng để lưu trữ các vật phẩm quý giá, như đồ cổ, tranh ảnh, hoặc những món đồ có ý nghĩa sâu sắc. \n\nNgữ cảnh đã dùng:\n- [1] The Impact of Social Media on Mental Health Among Young Adults\nAbstract: This research investigates the impact of social media on mental health among young adults.\nIntroduction: Social media platforms have become integral to daily life, especially among younger populations.\nMethodology: A mixed-method approach including surveys and interviews was used to collect data.\nResults: Excessive usage correlates with increased anxiety and depression levels.\nConclusion: Balanced usage and awareness are essential to mitigate negative mental health effects.",
+      "context": [
+        {
+          "text": "The Impact of Social Media on Mental Health Among\n Young Adults\nAbstract: This research investigates the impact of social media on mental health among young adults.\nIntroduction: Social media platforms have become integral to daily life, especially among younger\npopulations.\nMethodology: A mixed-method approach including surveys and interviews was used to collect data.\nResults: Excessive usage correlates with increased anxiety and depression levels.\nConclusion: Balanced usage and awareness are essential to mitigate negative mental health effects.",
+          "score": -0.05893988907337189,
+          "metadata": {
+            "source": "research_paper_social_media_mental_health.pdf",
+            "page": 1,
+            "content_type": "application/octet-stream",
+            "chunk_index": 0,
+            "chunk_size": 1000,
+            "chunk_overlap": 100
+          }
+        }
+      ]
+    },
+    {
+      "turn_id": 3,
+      "timestamp": "2026-04-15T09:43:01.039983+00:00",
+      "question": "trả lời tiếng việt",
+      "answer": "Nội dung trả lời: \nThe impact of social media on mental health among young adults has been extensively studied. Excessive use is associated with higher anxiety and depression levels, according to the research. Balanced usage and awareness are crucial in mitigating negative effects.\n\nNguồn ngữ cảnh đã dùng: [1] The Impact of Social Media on Mental Health Among Young Adults",
+      "corag_answer": "Nội dung trả lời: \nThe impact of social media on mental health among young adults has been extensively studied. Excessive use is associated with higher anxiety and depression levels, according to the research. Balanced usage and awareness are crucial in mitigating negative effects.\n\nNguồn ngữ cảnh đã dùng: [1] The Impact of Social Media on Mental Health Among Young Adults",
+      "context": [
+        {
+          "text": "The Impact of Social Media on Mental Health Among\n Young Adults\nAbstract: This research investigates the impact of social media on mental health among young adults.\nIntroduction: Social media platforms have become integral to daily life, especially among younger\npopulations.\nMethodology: A mixed-method approach including surveys and interviews was used to collect data.\nResults: Excessive usage correlates with increased anxiety and depression levels.\nConclusion: Balanced usage and awareness are essential to mitigate negative mental health effects.",
+          "score": 0.05590607225894928,
+          "metadata": {
+            "source": "research_paper_social_media_mental_health.pdf",
+            "page": 1,
+            "content_type": "application/octet-stream",
+            "chunk_index": 0,
+            "chunk_size": 1000,
+            "chunk_overlap": 100
+          }
+        }
+      ]
+    },
+    {
+      "turn_id": 4,
+      "timestamp": "2026-04-15T09:43:29.315998+00:00",
+      "question": "minh truc",
+      "answer": "Nội dung trả lời: \nThe impact of social media on the mental health of young adults has been extensively studied. Excessive use is associated with higher anxiety and depression levels, as indicated by this research. Balanced usage and awareness are crucial to mitigate negative effects.\n\nNguồn ngữ cảnh đã dùng: [1] The Impact of Social Media on Mental Health Among Young Adults",
+      "corag_answer": "Nội dung trả lời: \nThe impact of social media on the mental health of young adults has been extensively studied. Excessive use is associated with higher anxiety and depression levels, as indicated by this research. Balanced usage and awareness are crucial to mitigate negative effects.\n\nNguồn ngữ cảnh đã dùng: [1] The Impact of Social Media on Mental Health Among Young Adults\n\nNgữ cảnh mới:\n[1] The Impact of Social Media on Mental Health Among Young Adults\nAbstract: This research investigates the impact of social media on mental health among young adults.\nIntroduction: Social media platforms have become integral to daily life, especially among younger populations.\nMethodology: A mixed-method approach including surveys and interviews was used to collect data.\nResults: Excessive usage correlates with increased anxiety and depression levels.\nConclusion: Balanced usage and awareness are essential to mitigate negative mental health effects.",
+      "context": [
+        {
+          "text": "The Impact of Social Media on Mental Health Among\n Young Adults\nAbstract: This research investigates the impact of social media on mental health among young adults.\nIntroduction: Social media platforms have become integral to daily life, especially among younger\npopulations.\nMethodology: A mixed-method approach including surveys and interviews was used to collect data.\nResults: Excessive usage correlates with increased anxiety and depression levels.\nConclusion: Balanced usage and awareness are essential to mitigate negative mental health effects.",
+          "score": 0.12893447279930115,
+          "metadata": {
+            "source": "research_paper_social_media_mental_health.pdf",
+            "page": 1,
+            "content_type": "application/octet-stream",
+            "chunk_index": 0,
+            "chunk_size": 1000,
+            "chunk_overlap": 100
+          }
+        }
+      ]
+    }
+  ]
+}

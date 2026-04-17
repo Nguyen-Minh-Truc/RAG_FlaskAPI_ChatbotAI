@@ -507,7 +507,7 @@ def ask_question(question: str, conv_id: str, corag_rounds: int):
     return data, code
 
 
-DEFAULT_CORAG_ROUNDS = 3
+DEFAULT_CORAG_ROUNDS = 1
 
 
 # ─────────────────────────────────────────────

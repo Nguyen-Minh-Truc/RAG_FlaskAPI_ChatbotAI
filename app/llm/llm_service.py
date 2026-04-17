@@ -1,5 +1,7 @@
 """LLM abstraction layer (skeleton only)."""
 
+from functools import lru_cache
+
 from langchain_ollama import ChatOllama
 
 from app import config
@@ -82,24 +84,21 @@ def build_corag_prompt(
     ).strip()
 
 
-def _get_qwen_client() -> ChatOllama:
-    """Create the Ollama chat client configured for Qwen."""
+@lru_cache(maxsize=4)
+def _get_qwen_client(temperature: float = 0.0) -> ChatOllama:
+    """Create and cache Ollama chat clients configured for Qwen."""
     if config.LLM_PROVIDER.lower() != "ollama":
         raise ValueError("LLM_PROVIDER must be 'ollama' to use local Qwen")
 
     return ChatOllama(
         model=config.OLLAMA_MODEL,
         base_url=config.OLLAMA_BASE_URL,
-        temperature=0,
+        temperature=temperature,
     )
 
 
 def _invoke_llm(prompt: str, temperature: float = 0.0) -> str:
-    llm = ChatOllama(
-        model=config.OLLAMA_MODEL,
-        base_url=config.OLLAMA_BASE_URL,
-        temperature=temperature,
-    )
+    llm = _get_qwen_client(temperature=temperature)
     response = llm.invoke(prompt)
 
     # LangChain can return AIMessage; keep API output strictly as plain string.
