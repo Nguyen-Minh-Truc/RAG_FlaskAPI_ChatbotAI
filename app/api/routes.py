@@ -29,6 +29,25 @@ MAX_CHUNK_SIZE = 5000
 MIN_CHUNK_OVERLAP = 0
 MAX_CHUNK_OVERLAP = 2000
 
+
+def _build_source_references(context_chunks: list[dict]) -> list[dict]:
+    """Build concise source references from retrieved context chunks."""
+    references: list[dict] = []
+
+    for idx, chunk in enumerate(context_chunks, start=1):
+        metadata = chunk.get("metadata", {}) or {}
+        references.append(
+            {
+                "index": idx,
+                "source": metadata.get("source", "unknown"),
+                "page": metadata.get("page"),
+                "chunk_index": metadata.get("chunk_index"),
+                "score": float(chunk.get("score", 0.0)),
+            }
+        )
+
+    return references
+
 @api_bp.get("/api/health")
 def health_check():
     """Simple health endpoint for quick service checks."""
@@ -54,15 +73,6 @@ def get_conversation_detail(conversation_id: str):
         return error_response("Conversation not found.", 404)
     except Exception as exc:
         return error_response("Failed to load conversation", 500, details={"detail": str(exc)})
-
-    turns = history.get("turns", [])
-    sanitized_turns = []
-    for turn in turns:
-        sanitized_turn = dict(turn)
-        sanitized_turn.pop("context", None)
-        sanitized_turns.append(sanitized_turn)
-
-    history["turns"] = sanitized_turns
 
     return success_response(data=history, message="Conversation detail fetched successfully")
 
@@ -320,6 +330,8 @@ def ask_question():
             "rag_answer": rag_answer,
             "corag_answer": corag_answer,
             "corag_trace": corag_trace,
+            "context": context_chunks,
+            "source_references": _build_source_references(context_chunks),
         },
         message="RAG and Co-RAG answers generated successfully",
     )

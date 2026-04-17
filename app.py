@@ -6,6 +6,7 @@ Connects to the Flask REST API defined in routes.py
 import time
 import html
 import os
+import re
 import requests
 import streamlit as st
 
@@ -413,6 +414,13 @@ html, body, [data-testid="stApp"] {
 }
 .empty-state .icon { font-size: 40px; margin-bottom: 12px; }
 .empty-state p { font-size: 14px; margin:0; }
+
+mark {
+    background: rgba(247, 214, 62, 0.35);
+    color: var(--text);
+    padding: 0 2px;
+    border-radius: 3px;
+}
 </style>
 """,
     unsafe_allow_html=True,
@@ -457,6 +465,91 @@ def api(method: str, path: str, timeout: int = 60, **kwargs):
 
 def esc(value):
     return html.escape(str(value))
+
+
+_HIGHLIGHT_STOPWORDS = {
+    "la", "va", "cua", "cho", "trong", "mot", "nhung", "cac", "the", "nay", "kia",
+    "toi", "ban", "anh", "chi", "em", "hay", "voi", "ve", "tu", "tai", "duoc", "khong",
+}
+
+
+def _extract_keywords(question: str, max_terms: int = 8) -> list[str]:
+    terms = re.findall(r"[A-Za-z0-9_\-\u00C0-\u1EF9]+", (question or "").lower())
+    filtered: list[str] = []
+    seen: set[str] = set()
+    for term in terms:
+        if len(term) < 3 or term in _HIGHLIGHT_STOPWORDS or term in seen:
+            continue
+        filtered.append(term)
+        seen.add(term)
+        if len(filtered) >= max_terms:
+            break
+
+    return filtered
+
+
+def _highlight_text(text: str, keywords: list[str]) -> str:
+    if not text:
+        return ""
+
+    if not keywords:
+        return esc(text)
+
+    pattern = re.compile("(" + "|".join(re.escape(term) for term in keywords) + ")", re.IGNORECASE)
+    parts = pattern.split(text)
+
+    highlighted_parts: list[str] = []
+    for idx, part in enumerate(parts):
+        if idx % 2 == 1:
+            highlighted_parts.append(f"<mark>{esc(part)}</mark>")
+        else:
+            highlighted_parts.append(esc(part))
+
+    return "".join(highlighted_parts)
+
+
+def render_context_sources(context_chunks: list[dict], question: str, key_prefix: str):
+    """Render clickable source context blocks with keyword highlights."""
+    if not context_chunks:
+        st.caption("Khong co context duoc luu cho luot hoi dap nay.")
+        return
+
+    keywords = _extract_keywords(question)
+
+    tab_labels: list[str] = []
+    for idx, chunk in enumerate(context_chunks, start=1):
+        metadata = chunk.get("metadata", {}) or {}
+        source = metadata.get("source") or "unknown"
+        page = metadata.get("page")
+        chunk_index = metadata.get("chunk_index")
+        score = float(chunk.get("score", 0.0))
+
+        page_label = f"page {page}" if page is not None else "page ?"
+        pos_label = f"chunk {chunk_index}" if chunk_index is not None else "chunk ?"
+        tab_labels.append(f"[{idx}] {source} | {page_label} | {pos_label} | score={score:.4f}")
+
+    tabs = st.tabs(tab_labels)
+
+    for tab, chunk in zip(tabs, context_chunks):
+        with tab:
+            metadata = chunk.get("metadata", {}) or {}
+            source = metadata.get("source") or "unknown"
+            page = metadata.get("page")
+            chunk_index = metadata.get("chunk_index")
+            score = float(chunk.get("score", 0.0))
+            text = chunk.get("text", "")
+
+            st.markdown(
+                f"""
+                <div style="margin-bottom:8px;color:#b8bfd8;font-size:12px;">
+                    Nguon: {esc(source)} | Trang: {esc(page)} | Vi tri chunk: {esc(chunk_index)} | score={score:.4f}
+                </div>
+                <div style="white-space:pre-wrap;line-height:1.65;">
+                    {_highlight_text(text, keywords)}
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
 
 
 def check_health():
@@ -647,6 +740,7 @@ with st.sidebar:
                             "question": t.get("question", ""),
                             "rag_answer": t.get("answer", ""),
                             "corag_answer": t.get("corag_answer", ""),
+                            "context": t.get("context", []),
                         }
                         for t in detail.get("turns", [])
                     ]
@@ -734,10 +828,11 @@ with tab_chat:
         # ── Chat history display ──────────────────
         if st.session_state.chat_history:
             st.markdown('<div class="chat-scroll">', unsafe_allow_html=True)
-            for item in st.session_state.chat_history:
+            for history_index, item in enumerate(st.session_state.chat_history, start=1):
                 safe_question = esc(item.get("question", ""))
                 rag_answer = item.get("rag_answer")
                 corag_answer = item.get("corag_answer")
+                context_chunks = item.get("context", [])
                 safe_rag = esc(rag_answer) if rag_answer else '<em style="color:var(--subtext)">—</em>'
                 safe_corag = esc(corag_answer) if corag_answer else '<em style="color:var(--subtext)">—</em>'
                 st.markdown(
@@ -773,6 +868,13 @@ with tab_chat:
                             """,
                             unsafe_allow_html=True,
                         )
+
+                    st.markdown("#### Nguon thong tin va context goc")
+                    render_context_sources(
+                        context_chunks=context_chunks,
+                        question=item.get("question", ""),
+                        key_prefix=f"chat_{history_index}",
+                    )
 
             st.markdown("</div>", unsafe_allow_html=True)
         else:
@@ -819,6 +921,7 @@ with tab_chat:
                         "question":     question.strip(),
                         "rag_answer":   d.get("rag_answer", ""),
                         "corag_answer": d.get("corag_answer", ""),
+                        "context":      d.get("context", []),
                     })
                     st.session_state.question_box_version += 1
                     st.rerun()
@@ -931,4 +1034,11 @@ with tab_history:
                         </div>
                         """,
                         unsafe_allow_html=True,
+                    )
+
+                    st.markdown("#### Nguon thong tin va context goc")
+                    render_context_sources(
+                        context_chunks=turn.get("context", []),
+                        question=q,
+                        key_prefix=f"history_{idx+1}",
                     )
