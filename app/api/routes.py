@@ -24,6 +24,11 @@ from app.api.response import error_response, success_response
 
 api_bp = Blueprint("api", __name__)
 
+MIN_CHUNK_SIZE = 100
+MAX_CHUNK_SIZE = 5000
+MIN_CHUNK_OVERLAP = 0
+MAX_CHUNK_OVERLAP = 2000
+
 @api_bp.get("/api/health")
 def health_check():
     """Simple health endpoint for quick service checks."""
@@ -111,6 +116,44 @@ def _validate_upload_file():
     return uploaded_file, None
 
 
+def _parse_upload_chunk_params() -> tuple[int, int] | tuple[None, tuple]:
+    """Parse optional chunk params from multipart form with validation."""
+    raw_chunk_size = request.form.get("chunk_size")
+    raw_chunk_overlap = request.form.get("chunk_overlap")
+
+    chunk_size = config.CHUNK_SIZE
+    chunk_overlap = config.CHUNK_OVERLAP
+
+    if raw_chunk_size is not None and raw_chunk_size.strip() != "":
+        try:
+            chunk_size = int(raw_chunk_size)
+        except ValueError:
+            return None, error_response("Field 'chunk_size' must be an integer.", 400)
+
+    if raw_chunk_overlap is not None and raw_chunk_overlap.strip() != "":
+        try:
+            chunk_overlap = int(raw_chunk_overlap)
+        except ValueError:
+            return None, error_response("Field 'chunk_overlap' must be an integer.", 400)
+
+    if not (MIN_CHUNK_SIZE <= chunk_size <= MAX_CHUNK_SIZE):
+        return None, error_response(
+            f"Field 'chunk_size' must be between {MIN_CHUNK_SIZE} and {MAX_CHUNK_SIZE}.",
+            400,
+        )
+
+    if not (MIN_CHUNK_OVERLAP <= chunk_overlap <= MAX_CHUNK_OVERLAP):
+        return None, error_response(
+            f"Field 'chunk_overlap' must be between {MIN_CHUNK_OVERLAP} and {MAX_CHUNK_OVERLAP}.",
+            400,
+        )
+
+    if chunk_overlap >= chunk_size:
+        return None, error_response("Field 'chunk_overlap' must be smaller than 'chunk_size'.", 400)
+
+    return (chunk_size, chunk_overlap), None
+
+
 @api_bp.post("/api/upload")
 def ingest_pdf():
     """
@@ -124,6 +167,12 @@ def ingest_pdf():
     uploaded_file, validation_error = _validate_upload_file()
     if validation_error:
         return validation_error
+
+    chunk_params, chunk_error = _parse_upload_chunk_params()
+    if chunk_error:
+        return chunk_error
+
+    chunk_size, chunk_overlap = chunk_params
 
     conversation_id = create_conversation(uploaded_file.filename or "uploaded.pdf")
 
@@ -156,8 +205,8 @@ def ingest_pdf():
         )
     chunks = split_into_chunks(
         documents=documents,
-        chunk_size=config.CHUNK_SIZE,
-        chunk_overlap=config.CHUNK_OVERLAP,
+        chunk_size=chunk_size,
+        chunk_overlap=chunk_overlap,
     )
 
     chunk_texts = [chunk.get("text", "") for chunk in chunks]
@@ -174,6 +223,8 @@ def ingest_pdf():
             "conversation_id": conversation_id,
             "documents": len(documents),
             "chunks": len(chunks),
+            "chunk_size": chunk_size,
+            "chunk_overlap": chunk_overlap,
         },
         message="PDF ingestion completed successfully",
     )

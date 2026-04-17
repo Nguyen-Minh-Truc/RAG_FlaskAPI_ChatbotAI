@@ -489,11 +489,12 @@ def delete_all_conversations():
     return code == 200
 
 
-def upload_file(file_bytes, filename: str):
+def upload_file(file_bytes, filename: str, chunk_size: int, chunk_overlap: int):
     data, code = api(
         "post", "/api/upload",
         timeout=180,
-        files={"file": (filename, file_bytes, "application/octet-stream")}
+        files={"file": (filename, file_bytes, "application/octet-stream")},
+        data={"chunk_size": str(chunk_size), "chunk_overlap": str(chunk_overlap)},
     )
     return data, code
 
@@ -568,6 +569,18 @@ with st.sidebar:
         type=["pdf", "doc", "docx"],
         label_visibility="collapsed",
     )
+    chunk_size_option = st.selectbox(
+        "Chunk size",
+        options=[500, 1000, 1500, 2000],
+        index=1,
+        help="Do dai moi chunk khi chia van ban.",
+    )
+    chunk_overlap_option = st.selectbox(
+        "Chunk overlap",
+        options=[50, 100, 200],
+        index=1,
+        help="So ky tu overlap giua hai chunk lien tiep.",
+    )
     do_upload = st.button("⬆ Nap tai lieu", key="btn_upload", use_container_width=True, type="primary")
 
     if do_upload:
@@ -575,13 +588,22 @@ with st.sidebar:
             st.warning("Vui long chon file truoc.")
         else:
             with st.spinner("Dang nap du lieu..."):
-                data, code = upload_file(uploaded.read(), uploaded.name)
+                data, code = upload_file(
+                    uploaded.read(),
+                    uploaded.name,
+                    chunk_size=chunk_size_option,
+                    chunk_overlap=chunk_overlap_option,
+                )
             if code == 200:
                 info = data.get("data", {})
                 st.session_state.active_conv_id = info.get("conversation_id")
                 st.session_state.chat_history = []
                 st.toast(
-                    f"✅ Da lap chi muc {info.get('chunks', '?')} doan tu {info.get('documents', '?')} trang.",
+                    (
+                        "✅ Da lap chi muc "
+                        f"{info.get('chunks', '?')} doan tu {info.get('documents', '?')} trang "
+                        f"(chunk_size={info.get('chunk_size', '?')}, overlap={info.get('chunk_overlap', '?')})."
+                    ),
                     icon="📄",
                 )
                 st.rerun()

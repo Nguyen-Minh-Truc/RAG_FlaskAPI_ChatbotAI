@@ -136,6 +136,8 @@ Kiem tra service con song.
 
 - Content-Type: `multipart/form-data`
 - Field: `file` (`.pdf/.doc/.docx`)
+- Optional field: `chunk_size` (`500 | 1000 | 1500 | 2000`)
+- Optional field: `chunk_overlap` (`50 | 100 | 200`)
 - Tac vu: parse file -> chunk -> embedding -> save FAISS -> tao conversation
 
 ### `POST /api/ask`
@@ -203,3 +205,22 @@ Khong dung `straemlit_app.py` (sai chinh ta).
 - Co-RAG da duoc noi voi base RAG answer de tranh sinh 2 ket qua giong het nhau.
 - Lich su da luu ca `answer` (RAG) va `corag_answer`.
 - Input question tren Streamlit da auto reset sau moi lan gui thanh cong.
+
+## 11. Benchmark chunk parameters
+
+Project da co script benchmark de thu 12 to hop:
+
+- chunk_size: `500, 1000, 1500, 2000`
+- chunk_overlap: `50, 100, 200`
+
+Chay benchmark:
+
+```bash
+python scripts/run_chunk_experiments.py --file /duong_dan/toi/tai_lieu.pdf --max-questions 20 --top-k 3
+```
+
+Ket qua se duoc ghi vao:
+
+- `storage/experiments/chunk_grid_report_<timestamp>.json`
+
+Report xep hang theo `avg_accuracy_proxy` (answer-based proxy), dong thoi hien latency va retrieval score de so sanh.
