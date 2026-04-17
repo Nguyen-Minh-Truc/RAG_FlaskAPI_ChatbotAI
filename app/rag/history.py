@@ -33,6 +33,23 @@ def _utc_now_iso() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
+def _build_memory_turn(turn: dict) -> dict:
+    return {
+        "turn_id": turn.get("turn_id"),
+        "timestamp": turn.get("timestamp"),
+        "question": turn.get("question", ""),
+        "answer": turn.get("answer", ""),
+        "corag_answer": turn.get("corag_answer", ""),
+    }
+
+
+def _recent_turns(turns: list[dict], limit: int) -> list[dict]:
+    if limit <= 0:
+        return []
+
+    return [_build_memory_turn(turn) for turn in turns[-limit:]]
+
+
 def create_conversation(upload_filename: str) -> str:
     """Create a new conversation session and persist metadata."""
     conversation_id = _next_conversation_id()
@@ -44,6 +61,7 @@ def create_conversation(upload_filename: str) -> str:
         "updated_at": now,
         "turn_count": 0,
         "turns": [],
+        "recent_turns": [],
     }
     _conversation_path(conversation_id).write_text(
         json.dumps(payload, ensure_ascii=False, indent=2),
@@ -66,6 +84,8 @@ def append_conversation_turn(
     answer: str,
     corag_answer: str | None,
     context: list[dict],
+    memory_context: list[dict] | None = None,
+    resolved_question: str | None = None,
 ) -> dict:
     """Append one Q&A turn into an existing conversation."""
     history = load_conversation_history(conversation_id)
@@ -75,14 +95,18 @@ def append_conversation_turn(
         "turn_id": turn_id,
         "timestamp": _utc_now_iso(),
         "question": question,
+        "resolved_question": resolved_question or question,
         "answer": answer,
         "corag_answer": corag_answer,
         "context": context,
+        "memory_context": memory_context or [],
+        "follow_up": bool(memory_context),
     }
 
     history["turns"].append(turn)
     history["turn_count"] = turn_id
     history["updated_at"] = _utc_now_iso()
+    history["recent_turns"] = _recent_turns(history["turns"], limit=4)
 
     _conversation_path(conversation_id).write_text(
         json.dumps(history, ensure_ascii=False, indent=2),
@@ -90,6 +114,12 @@ def append_conversation_turn(
     )
 
     return turn
+
+
+def get_recent_turns(conversation_id: str, limit: int = 4) -> list[dict]:
+    """Return the most recent turns for conversation memory."""
+    history = load_conversation_history(conversation_id)
+    return _recent_turns(history.get("turns", []), limit=limit)
 
 
 def list_conversations() -> list[dict]:

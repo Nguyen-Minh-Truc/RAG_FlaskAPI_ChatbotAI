@@ -32,6 +32,8 @@ def generate_corag_answer(
     base_chunks: list[dict] | None = None,
     base_answer: str = "",
     rounds: int = DEFAULT_CORAG_ROUNDS,
+    memory_turns: list[dict] | None = None,
+    original_question: str | None = None,
 ) -> tuple[str, list[dict], list[dict]]:
     """
     Generate answer with iterative corrective retrieval and per-round trace.
@@ -75,6 +77,8 @@ def generate_corag_answer(
             previous_answer=latest_answer,
             round_no=round_no,
             rounds=rounds,
+            memory_turns=memory_turns,
+            original_question=original_question,
         )
 
         trace.append(

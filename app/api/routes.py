@@ -13,13 +13,14 @@ from app.rag.history import (
     create_conversation,
     delete_all_conversations,
     delete_conversation,
+    get_recent_turns,
     list_conversations,
     load_conversation_history,
 )
 from app.rag.loader import SUPPORTED_UPLOAD_EXTENSIONS, load_uploaded_document
 from app.rag.retriever import retrieve_top_k_chunks
 from app.rag.vectorstore import save_embeddings_and_vectorstore
-from app.llm.llm_service import generate_answer
+from app.llm.llm_service import generate_answer, rewrite_followup_question
 from app.api.response import error_response, success_response
 
 api_bp = Blueprint("api", __name__)
@@ -266,6 +267,18 @@ def ask_question():
 
     question = question.strip()
 
+    try:
+        memory_turns = get_recent_turns(conversation_id, limit=config.CONVERSATION_MEMORY_TURNS)
+    except FileNotFoundError:
+        memory_turns = []
+
+    resolved_question = question
+    if memory_turns:
+        try:
+            resolved_question = rewrite_followup_question(question=question, memory_turns=memory_turns)
+        except Exception:
+            resolved_question = question
+
     # conversation_id is optional: if missing, use latest conversation.
     if isinstance(conversation_id, str) and conversation_id.strip():
         conversation_id = conversation_id.strip()
@@ -281,7 +294,7 @@ def ask_question():
     # RAG step 1-3:
     # User question -> embedding -> similarity search -> retrieve top-k chunks
     try:
-        context_chunks = retrieve_top_k_chunks(question=question, top_k=config.TOP_K)
+        context_chunks = retrieve_top_k_chunks(question=resolved_question, top_k=config.TOP_K)
     except FileNotFoundError:
         return error_response(
             "Vector store not found. Please upload a file first via POST /api/upload.",
@@ -293,16 +306,21 @@ def ask_question():
     # RAG step 4-5:
     # send top-k context + question to LLM -> return generated answer
     try:
-        rag_answer = generate_answer(question=question, context_chunks=context_chunks)
+        rag_answer = generate_answer(
+            question=resolved_question,
+            context_chunks=context_chunks,
+        )
     except Exception as exc:
         return error_response("RAG generation failed", 500, details={"detail": str(exc)})
 
     try:
         corag_answer, _, corag_trace = generate_corag_answer(
-            question=question,
+            question=resolved_question,
             base_chunks=context_chunks,
             base_answer=rag_answer,
             rounds=corag_rounds,
+            memory_turns=memory_turns,
+            original_question=question,
         )
     except Exception as exc:
         return error_response("Co-RAG generation failed", 500, details={"detail": str(exc)})
@@ -314,6 +332,8 @@ def ask_question():
             answer=rag_answer,
             corag_answer=corag_answer,
             context=context_chunks,
+            memory_context=memory_turns,
+            resolved_question=resolved_question,
         )
     except FileNotFoundError:
         return error_response(
@@ -327,11 +347,14 @@ def ask_question():
         data={
             "conversation_id": conversation_id,
             "turn_id": turn.get("turn_id"),
+            "original_question": question,
+            "resolved_question": resolved_question,
             "rag_answer": rag_answer,
             "corag_answer": corag_answer,
             "corag_trace": corag_trace,
             "context": context_chunks,
             "source_references": _build_source_references(context_chunks),
+            "memory_turns": memory_turns,
         },
         message="RAG and Co-RAG answers generated successfully",
     )
