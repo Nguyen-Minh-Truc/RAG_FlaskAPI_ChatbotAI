@@ -592,11 +592,16 @@ def upload_file(file_bytes, filename: str, chunk_size: int, chunk_overlap: int):
     return data, code
 
 
-def ask_question(question: str, conv_id: str, corag_rounds: int):
+def ask_question(question: str, conv_id: str, corag_rounds: int, use_hybrid_search: bool):
     data, code = api(
         "post", "/api/ask",
         timeout=300,
-        json={"question": question, "conversation_id": conv_id, "corag_rounds": corag_rounds},
+        json={
+            "question": question,
+            "conversation_id": conv_id,
+            "corag_rounds": corag_rounds,
+            "use_hybrid_search": use_hybrid_search,
+        },
     )
     return data, code
 
@@ -654,6 +659,16 @@ with st.sidebar:
                 st.toast(f"✅ API hoat dong on dinh: {st.session_state.api_base}", icon="✅")
             else:
                 st.toast(f"❌ Khong the ket noi API: {st.session_state.api_base}", icon="❌")
+
+    st.session_state.setdefault("use_hybrid_search", True)
+    st.session_state.use_hybrid_search = st.checkbox(
+        "Hybrid search",
+        value=st.session_state.use_hybrid_search,
+        help="Bat/tat ket hop FAISS + BM25 cho ca RAG va Co-RAG.",
+    )
+    st.caption(
+        f"Che do hien tai: {'Hybrid (FAISS + BM25)' if st.session_state.use_hybrid_search else 'Vector-only (FAISS)'}"
+    )
 
     # ── Upload ───────────────────────────────
     st.markdown('<div class="sidebar-section">📂 Tai tai lieu</div>', unsafe_allow_html=True)
@@ -913,6 +928,7 @@ with tab_chat:
                         question.strip(),
                         st.session_state.active_conv_id,
                         DEFAULT_CORAG_ROUNDS,
+                        st.session_state.use_hybrid_search,
                     )
 
                 if code == 200:
@@ -922,6 +938,7 @@ with tab_chat:
                         "rag_answer":   d.get("rag_answer", ""),
                         "corag_answer": d.get("corag_answer", ""),
                         "context":      d.get("context", []),
+                        "use_hybrid_search": d.get("use_hybrid_search", st.session_state.use_hybrid_search),
                     })
                     st.session_state.question_box_version += 1
                     st.rerun()

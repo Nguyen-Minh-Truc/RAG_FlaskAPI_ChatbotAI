@@ -26,6 +26,7 @@ README nay duoc viet lai de nguoi moi co the clone repo va chay ngay.
 - `app/rag/embeddings.py`: tao embeddings
 - `app/rag/vectorstore.py`: luu/tai FAISS
 - `app/rag/retriever.py`: tim top-k context
+- `hybrid_search.py`: hybrid FAISS + BM25 retriever
 - `app/llm/llm_service.py`: prompt + goi Ollama
 - `app/corag/pipeline.py`: pipeline Co-RAG
 - `app/config.py`: config tu `.env`
@@ -83,6 +84,7 @@ EMBEDDING_MODEL=sentence-transformers/all-MiniLM-L6-v2
 TOP_K=3
 CHUNK_SIZE=500
 CHUNK_OVERLAP=50
+USE_HYBRID_SEARCH=true
 ```
 
 ## 6. Chay du an
@@ -115,7 +117,52 @@ Mac dinh UI: `http://localhost:8501` (co the la 8502 neu 8501 dang duoc su dung)
    - Co-RAG (da tinh chinh qua nhieu vong)
 5. Xem lich su o tab History.
 
-## 8. API contract (hien tai)
+## 8. Hybrid Search (FAISS + BM25)
+
+He thong ho tro hybrid search de ket hop:
+
+- FAISS vector search cho y nghia ngu canh
+- BM25 keyword search cho tu khoa va cau hoi ngan
+
+Ban co the bat/tat che do nay theo 2 cach:
+
+- Qua `.env`: `USE_HYBRID_SEARCH=true` hoac `false`
+- Qua Streamlit sidebar: checkbox `Hybrid search`
+
+Khi muon so sanh cac che do tim kiem, dung helper trong `hybrid_search.py`:
+
+```python
+from hybrid_search import HybridSearchRetriever
+
+retriever = HybridSearchRetriever(top_k=5)
+retriever.build()
+result = retriever.compare_performance(
+  query="Product service la gi?",
+  ground_truth_docs=[],
+  k=5,
+)
+```
+
+Ham `compare_performance()` se in bang so sanh cho 3 che do:
+
+- `vector`
+- `bm25`
+- `ensemble`
+
+Chi so bao gom:
+
+- `Precision@k`
+- `Recall@k`
+- `MRR`
+- `latency_ms`
+
+Neu ban muon test nhanh bang sample document, chay truc tiep:
+
+```bash
+python hybrid_search.py
+```
+
+## 9. API contract (hien tai)
 
 Tat ca response deu theo envelope:
 
@@ -175,7 +222,7 @@ Xoa 1 hoi thoai.
 
 Xoa toan bo hoi thoai.
 
-## 9. Su co thuong gap
+## 10. Su co thuong gap
 
 ### Port 5000 bi chiem
 
@@ -200,13 +247,13 @@ Khong dung `straemlit_app.py` (sai chinh ta).
 - Da cai `en_core_web_sm`
 - Neu la file scan/anh: can OCR truoc
 
-## 10. Ghi chu cho nguoi phat trien
+## 11. Ghi chu cho nguoi phat trien
 
 - Co-RAG da duoc noi voi base RAG answer de tranh sinh 2 ket qua giong het nhau.
 - Lich su da luu ca `answer` (RAG) va `corag_answer`.
 - Input question tren Streamlit da auto reset sau moi lan gui thanh cong.
 
-## 11. Benchmark chunk parameters
+## 12. Benchmark chunk parameters
 
 Project da co script benchmark de thu 12 to hop:
 

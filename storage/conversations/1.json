@@ -1,52 +1,58 @@
 {
   "conversation_id": "1",
-  "upload_filename": "3122410438_NguyenMinhTruc_CNLTHĐ.pdf",
-  "created_at": "2026-04-17T15:14:01.081335+00:00",
-  "updated_at": "2026-04-17T15:15:46.417937+00:00",
-  "turn_count": 2,
+  "upload_filename": "Intern_Backend_CV (2).pdf",
+  "created_at": "2026-04-21T07:27:27.310641+00:00",
+  "updated_at": "2026-04-21T07:30:46.177919+00:00",
+  "turn_count": 4,
   "turns": [
     {
       "turn_id": 1,
-      "timestamp": "2026-04-17T15:14:20.166985+00:00",
+      "timestamp": "2026-04-21T07:27:49.915768+00:00",
       "question": "đây là tài liệu gì",
       "resolved_question": "đây là tài liệu gì",
-      "answer": "Đây là tài liệu về đề tài xây dựng RESTful API bằng Express.js và TypeScript.\n\nNội dung liên quan đến nhóm:\n\n- Mã sinh viên: 31224104388\n- Họ tên: Nguyễn Minh Trực\n- Lớp: DCT1226\n- Nhóm: 33\n\nCác công nghệ hỗ trợ và lợi ích mang lại:\n\n- Mongoose (công cụ thao tác với cơ sở dữ liệu)\n- Ngôn ngữ TypeScript (nhằm nâng cấp chất lượng mã nguồn)",
-      "corag_answer": "Đây là tài liệu về đề tài xây dựng RESTful API bằng Express.js và TypeScript.",
+      "answer": "Đây là tài liệu về một dự án dormitory management system (dịch vụ quản lý phòng trọ) do nhóm bạn đã phát triển. Đây là một hệ thống quản lý sinh viên tại trường đại học Saigon, bao gồm các chức năng như quản lý thành viên, quản lý khu vực, quản lý phòng, quản lý chi tiêu và báo cáo tổng quát.\n\nDựa trên thông tin trong ngữ cảnh, không có tài liệu nào được đề cập.",
+      "corag_answer": "Đây là tài liệu về một dự án dormitory management system (dịch vụ quản lý phòng trọ) do nhóm bạn đã phát triển. Đây là một hệ thống quản lý sinh viên tại trường đại học Saigon, bao gồm các chức năng như quản lý thành viên, quản lý khu vực, quản lý phòng, quản lý chi tiêu và báo cáo tổng quát.\n\nDựa trên thông tin trong ngữ cảnh, không có tài liệu nào được đề cập.",
       "context": [
         {
-          "text": "MỤC LỤC MỤC LỤC ........................................................................................................ 2 I. Tổng quan ................................................................................................. 3 1. Giới thiệu về đề tài ........................................................................................... 3 2. Các công nghệ hỗ trợ và lợi ích mang lại ............................................................. 3 3. Cấu trúc thư mục hệ thống ................................................................................ 3 a. Cấu trúc tổng thể ......................................................................................................... 3 b. Các module chính ......................................................................................................... 4 1. Công việc chung trong nhóm ............................................................................. 5 2. Công viên cá nhân",
-          "score": 0.4839439392089844,
+          "text": "• Frontend: https://github.com/ttt2205/UI-Job-Recruitment-NextJS-KLTN\n• Backend: https://github.com/ttt2205/BE_Job_Recruitment_Platform_Spring_Boot_Microservice\nDormitory Management System (Team Project, Lead Developer)\n• Developed a comprehensive dormitory management system including member management, area\nmanagement, room management, expense management, and analytics dashboards.\n• Implemented security using JWT for authentication.\n• Applied RBAC (Role-Based Access Control) for permission management.\n• Tech Stack: Spring Boot, Spring Security (JWT), MySQL, RESTful API\n• Frontend: gitgithub.com/ttt2205/QL_KTX_FE\n• Backend: https://github.com/ttt2205/QL_KTX_BE\nCertifications\nTOEIC – Score: 650 2025\nEducation\nSaigon University, Software Engineering 2022 – Present\n• GPA: 3.07 / 4.0",
+          "score": 0.10025608539581299,
           "metadata": {
-            "source": "3122410438_NguyenMinhTruc_CNLTHĐ.pdf",
-            "page": 2,
+            "source": "Intern_Backend_CV (2).pdf",
+            "page": 1,
             "content_type": "application/octet-stream",
-            "chunk_index": 1,
+            "chunk_index": 2,
             "chunk_size": 1000,
-            "chunk_overlap": 100
+            "chunk_overlap": 100,
+            "score": 0.10025608539581299,
+            "retriever": "faiss"
           }
         },
         {
-          "text": "I. Tổng quan 1. Giới thiệu về đề tài • Tên đề tài: Xây dựng RESTful API bằng Express sử dụng ngôn ngữ TypeScript • Mục tiêu: Hiểu rõ về công nghệ Express đã cung cấp những gì thông qua việc xây dựng một hệ thống backend với những cơ bản đồng thời nghiên cứu và phát triển nền tảng kiến trúc hệ thống sao cho có tính mở rộng, an toàn và dễ bảo trì cho các hệ thống thực tế. 2. Các công nghệ hỗ trợ và lợi ích mang lại Để hiện thực hóa các mục tiêu trên, dự án tích hợp một số công cụ và thư viện hỗ trợ, tập trung vào việc tối ưu hóa trải nghiệm phát triển (Developer Experience) và đảm bảo tính toàn vẹn của dữ liệu. • Mongoose o Nguyên nhân sử dụng: Quá trình thao tác với cơ sở dữ liệu cần diễn ra nhanh chóng, trực quan và không đòi hỏi các thiết lập rườm rà. o Lợi ích: Mongoose cung cấp một API cực kỳ dễ sử dụng để định nghĩa các Model và tương tác với MongoDB. • Ngôn ngữ TypeScript o Nguyên nhân sử dụng: Nhằm nâng cấp chất lượng mã nguồn và tiếp cận với một trong những ngôn ngữ hiện đại. o",
-          "score": 0.48089611530303955,
+          "text": "Tang Thanh Trung\nHo Chi Minh City | thanhtrung22052004@gmail.com | 0773 735 100 | Portfolio | LinkedIn | GitHub\nAbout Me\nDesired Position: Backend Developer Intern\nI am an Information Technology student applying for a Backend Developer position. My goal is to contribute to\nthe company through responsibility , continuous learning, and teamwork, while improving my professional skills in\na real working environment. I am willing to adapt to new requirements and make continuous efforts to meet the\ncompany’s expectations.\nTechnologies\nLanguages: Java, JavaScript, TypeScript, Python, C#\nFrameworks: Spring Boot, NestJS, Django, .NET Core, ReactJS, NextJS\nDatabases: MySQL, PostgreSQL, MongoDB\nTools: Kafka, Docker, Git, Postman, RESTful APIs\nProjects\nRecruitment Web Platform (Personal Project)\n• Developed a recruitment platform where users can register as candidates or employers.\n• Integrated secure authentication using JWT.\n• Admins can manage users, job posts, and employer profiles.",
+          "score": 0.03572191670536995,
           "metadata": {
-            "source": "3122410438_NguyenMinhTruc_CNLTHĐ.pdf",
-            "page": 3,
-            "content_type": "application/octet-stream",
-            "chunk_index": 1,
-            "chunk_size": 1000,
-            "chunk_overlap": 100
-          }
-        },
-        {
-          "text": "1  \nỦY BAN NHÂN DÂN THÀNH PHỐ HỒ CHÍ MINH TRƯỜNG ĐẠI HỌC SÀI GÒN KHOA CÔNG NGHỆ THÔNG TIN \n BÁO CÁO CÁ NHÂN  HỌC PHẦN: CÁC CÔNG NGHỆ LẬP TRÌNH HIỆN ĐẠI ĐỀ TÀI:  XÂY DỰNG RESTFUL API BẰNG EXPRESS.JS VÀ TYPESCRIPT  Giáo viên hướng dẫn: Phạm Thi Vương   Thông tin cá nhân: Mã sinh viên: 31224104388 Họ tên: Nguyễn Minh Trực Lớp: DCT1226 Nhóm:33    TP. Hồ Chí Minh, Năm 2026",
-          "score": 0.4528684914112091,
-          "metadata": {
-            "source": "3122410438_NguyenMinhTruc_CNLTHĐ.pdf",
+            "source": "Intern_Backend_CV (2).pdf",
             "page": 1,
             "content_type": "application/octet-stream",
             "chunk_index": 0,
             "chunk_size": 1000,
-            "chunk_overlap": 100
+            "chunk_overlap": 100,
+            "score": 0.03572191670536995,
+            "retriever": "faiss"
+          }
+        },
+        {
+          "text": "• Admins can manage users, job posts, and employer profiles.\n• Employers can search for suitable candidates, and candidates can search for desired job positions.\n• Tech Stack: NestJS, NextJS, MongoDB, JWT\n• Frontend: https://github.com/ttt2205/UI-Job-Recruitment-NextJS-KLTN\n• Backend: https://github.com/ttt2205/Job-Recruitment-NestJS-KLTN\nRecruitment Web Platform (Team Project, Lead Developer)\n• Led a team of 4 to refactor the project from a NestJS monolith to Spring Boot microservices.\n• Migrated the database from MongoDB to MySQL with normalized schemas.\n• Implemented a real-time messaging feature and Kafka-based notifications for job updates and chats.\n• Added a feature that allows candidates to automatically generate AI-powered CVs tailored to specific job\npositions using prompt engineering techniques.\n• Tech Stack: Spring Boot, Spring Security , MySQL, Kafka, JWT, WebSocket, NextJS\n• Frontend: https://github.com/ttt2205/UI-Job-Recruitment-NextJS-KLTN",
+          "score": 0.015106989070773125,
+          "metadata": {
+            "source": "Intern_Backend_CV (2).pdf",
+            "page": 1,
+            "content_type": "application/octet-stream",
+            "chunk_index": 1,
+            "chunk_size": 1000,
+            "chunk_overlap": 100,
+            "score": 0.015106989070773125,
+            "retriever": "faiss"
           }
         }
       ],
@@ -55,56 +61,207 @@
     },
     {
       "turn_id": 2,
-      "timestamp": "2026-04-17T15:15:46.417215+00:00",
-      "question": "nó có gì đặt biệt",
-      "resolved_question": "câu hỏi đã chuẩn hoá: Nó có gì đặc biệt?",
-      "answer": "Nội dung trả lời:\n\n- Đây là một đề tài về xây dựng RESTful API bằng Express.js và TypeScript.\n- Đề tài tập trung vào việc hiểu công nghệ Express, nghiên cứu nền tảng kiến trúc hệ thống, và phát triển hệ thống backend với tính mở rộng, an toàn và dễ bảo trì.\n\nNgôn ngữ trả lời:\n\n1. Đây là một đề tài về xây dựng RESTful API bằng Express.js và TypeScript.\n2. Đề tài tập trung vào việc hiểu công nghệ Express, nghiên cứu nền tảng kiến trúc hệ thống, và phát triển hệ thống backend với tính mở rộng, an toàn và dễ bảo trì.\n\nNguồn ngữ cảnh đã dùng:\n\n- [1] inventoryReceipt\n- [2] I. Tổng quan\n- [3] 1  \nỦY BAN NHÂN DÂN THÀNH PHỐ HỒ CHÍ MINH TRƯỜNG ĐẠI HỌC SÀI GÒN KHOA CÔNG NGHỆ THÔNG TIN \n BÁO CÁO CÁ NHÂN  HỌỌ\n- Nguyễn Minh Trực, DCT1226, nhóm 33",
-      "corag_answer": "Nội dung trả lời:\n\n- Đây là một đề tài về xây dựng RESTful API bằng Express.js và TypeScript.\n- Đề tài tập trung vào việc hiểu công nghệ Express, nghiên cứu nền tảng kiến trúc hệ thống, và phát triển hệ thống backend với tính mở rộng, an toàn và dễ bảo trì.\n\nNgôn ngữ trả lời:\n\n1. Đây là một đề tài về xây dựng RESTful API bằng Express.js và TypeScript.\n2. Đề tài tập trung vào việc hiểu công nghệ Express, nghiên cứu nền tảng kiến trúc hệ thống, và phát triển hệ thống backend với tính mở rộng, an toàn và dễ bảo trì.\n\nNguồn ngữ cảnh đã dùng:\n\n- [1] inventoryReceipt\n- [2] I. Tổng quan\n- [3] 1  \nỦY BAN NHÂN DÂN THÀNH PHỐ HỒ CHÍ MINH TRƯỜNG ĐẠI HỌC SÀI GÒN KHOA CÔNG NGHỆ THÔNG TIN \n BÁO CÁO CÁ NHÂN  HỌỌ\n- Nguyễn Minh Trực, DCT1226, nhóm 33\n\nNgữ cảnh mới:\n[1] inventoryReceipt Phiếu nhập kho  II. Phần Làm Riêng 1. Công việc chung trong nhóm Trong quá trình làm việc nhóm, em đã tham gia các hoạt động chung của nhóm nhằm đảm bảo hệ thống được thống nhất giữa các thành viên và thao tác chuẩn trong hệ thống bao gồm: • Thống nhất về các chức năng cơ bản và database mà phải có trong hệ thống để áp dụng đầy đủ các chức năng mà express đã cung cấp • Tìm hiểu các thành phần phải có cho một hệ thống backend cơ bản. • Nghiên cứu xây dựng cách cấu trúc thư mục hệ thống sao cho để update và rõ ràng • Định nghĩa các quy tắt phải tuần theo nhằm mục địch đồng nhất code để các thành viên trong nhóm có thể dể dàng hiểu 2. Công viên cá nhân a. Xây dựng Module Product 1. Quy trình thực hiện: +  Model: Product Model là thành phần trong ứng dụng backend sử dụng Mongoose, chịu trách nhiệm tương tác trực tiếp với cơ sở dữ liệu MongoDB. Nó định nghĩa cấu trúc dữ liệu của sản phẩm thông qua Schema, và cung cấp các phương thức để thực hiện các thao tác CRUD (tạo,\n\n[2] I. Tổng quan 1. Giới thiệu về đề tài • Tên đề tài: Xây dựng RESTful API bằng Express sử dụng ngôn ngữ TypeScript • Mục tiêu: Hiểu rõ về công nghệ Express đã cung cấp những gì thông qua việc xây dựng một hệ thống backend với những cơ bản đồng thời nghiên cứu và phát triển nền tảng kiến trúc hệ thống sao cho có tính mở rộng, an toàn và dễ bảo trì cho các hệ thống thực tế. 2. Các công nghệ hỗ trợ và lợi ích mang lại Để hiện thực hóa các mục tiêu trên, dự án tích hợp một số công cụ và thư viện hỗ trợ, tập trung vào việc tối ưu hóa trải nghiệm phát triển (Developer Experience) và đảm bảo tính toàn vẹn của dữ liệu. • Mongoose o Nguyên nhân sử dụng: Quá trình thao tác với cơ sở dữ liệu cần diễn ra nhanh chóng, trực quan và không đòi hỏi các thiết lập rườm rà. o Lợi ích: Mongoose cung cấp một API cực kỳ dễ sử dụng để định nghĩa các Model và tương tác với MongoDB. • Ngôn ngữ TypeScript o Nguyên nhân sử dụng: Nhằm nâng cấp chất lượng mã nguồn và tiếp cận với một trong những ngôn ngữ hiện đại. o\n\n[3] 1  \nỦY BAN NHÂN DÂN THÀNH PHỐ HỒ CHÍ MINH TRƯỜNG ĐẠI HỌC SÀI GÒN KHOA CÔNG NGHỆ THÔNG TIN \n BÁO CÁO CÁ NHÂN  HỌỌ\n- Nguyễn Minh Trực, DCT1226, nhóm 33\n\nNgữ cảnh mới:\n[4] 14  \nController tương ứng. Phân biệt các phương thức HTTP: GET, POST, PUT, để quản lý sản phẩm hiệu quả. Mapper (toProductRes) Chuẩn hóa dữ liệu sản phẩm từ database sang định dạng trả về client (chuyển ObjectId thành string, giữ các field cần thiết). Giúp API trả dữ liệu gọn gàng, tách biệt dữ liệu nội bộ database với client.\n\n[5] database, giúp Controller gọn nhẹ và dễ đọc. Đảm bảo tính rõ ràng và thuận tiện cho việc kiểm thử. Route (/products) Xác định endpoint mà client có thể truy cập, kết nối request với\n\n[6] 4  \nHình 1: Cấu trúc tổng quan hệ thống b. Các module chính Module Chức năng auth Đăng ký, đăng nhập, xác thực JWT user Quản lý người dùng product Quản lý sản phẩm category order Quản lý đơn hàng customer Quản lý khách hàng supplier Quản lý nhà cung cấp",
+      "timestamp": "2026-04-21T07:28:28.640382+00:00",
+      "question": "đây là CV của tui mà",
+      "resolved_question": "Đây là CV của tôi.",
+      "answer": "Bạn đã hoàn thành các khóa học và có bằng cấp liên quan đến ngành công nghệ thông tin, đặc biệt là Software Engineering từ Saigon University. Bạn cũng đã có kinh nghiệm làm việc trong lĩnh vực Backend Developer Intern tại một dự án Dormitory Management System. Bạn đã từng tham gia nhóm để refactor một dự án NestJS monolith thành microservices và đã sử dụng các kỹ thuật như JWT, Spring Security, MySQL, Kafka, WebSocket, NextJS để tạo ra một hệ thống quản lý ứng tuyển viên và việc làm thực tế.",
+      "corag_answer": "Đây là CV của bạn, Tang Thanh Trung. Bạn đang ứng tuyển vào vị trí Backend Developer Intern tại một dự án Dormitory Management System do nhóm bạn phát triển. Bạn có kinh nghiệm về quản lý sinh viên và đã từng tham gia trong việc refactor một dự án NestJS monolith thành microservices.",
       "context": [
         {
-          "text": "inventoryReceipt Phiếu nhập kho  II. Phần Làm Riêng 1. Công việc chung trong nhóm Trong quá trình làm việc nhóm, em đã tham gia các hoạt động chung của nhóm nhằm đảm bảo hệ thống được thống nhất giữa các thành viên và thao tác chuẩn trong hệ thống bao gồm: • Thống nhất về các chức năng cơ bản và database mà phải có trong hệ thống để áp dụng đầy đủ các chức năng mà express đã cung cấp • Tìm hiểu các thành phần phải có cho một hệ thống backend cơ bản. • Nghiên cứu xây dựng cách cấu trúc thư mục hệ thống sao cho để update và rõ ràng • Định nghĩa các quy tắt phải tuần theo nhằm mục địch đồng nhất code để các thành viên trong nhóm có thể dể dàng hiểu 2. Công viên cá nhân a. Xây dựng Module Product 1. Quy trình thực hiện: +  Model: Product Model là thành phần trong ứng dụng backend sử dụng Mongoose, chịu trách nhiệm tương tác trực tiếp với cơ sở dữ liệu MongoDB. Nó định nghĩa cấu trúc dữ liệu của sản phẩm thông qua Schema, và cung cấp các phương thức để thực hiện các thao tác CRUD (tạo,",
-          "score": 0.6253336668014526,
+          "text": "• Frontend: https://github.com/ttt2205/UI-Job-Recruitment-NextJS-KLTN\n• Backend: https://github.com/ttt2205/BE_Job_Recruitment_Platform_Spring_Boot_Microservice\nDormitory Management System (Team Project, Lead Developer)\n• Developed a comprehensive dormitory management system including member management, area\nmanagement, room management, expense management, and analytics dashboards.\n• Implemented security using JWT for authentication.\n• Applied RBAC (Role-Based Access Control) for permission management.\n• Tech Stack: Spring Boot, Spring Security (JWT), MySQL, RESTful API\n• Frontend: gitgithub.com/ttt2205/QL_KTX_FE\n• Backend: https://github.com/ttt2205/QL_KTX_BE\nCertifications\nTOEIC – Score: 650 2025\nEducation\nSaigon University, Software Engineering 2022 – Present\n• GPA: 3.07 / 4.0",
+          "score": 0.08411257714033127,
           "metadata": {
-            "source": "3122410438_NguyenMinhTruc_CNLTHĐ.pdf",
-            "page": 5,
+            "source": "Intern_Backend_CV (2).pdf",
+            "page": 1,
             "content_type": "application/octet-stream",
-            "chunk_index": 1,
+            "chunk_index": 2,
             "chunk_size": 1000,
-            "chunk_overlap": 100
+            "chunk_overlap": 100,
+            "score": 0.08411257714033127,
+            "retriever": "faiss"
           }
         },
         {
-          "text": "I. Tổng quan 1. Giới thiệu về đề tài • Tên đề tài: Xây dựng RESTful API bằng Express sử dụng ngôn ngữ TypeScript • Mục tiêu: Hiểu rõ về công nghệ Express đã cung cấp những gì thông qua việc xây dựng một hệ thống backend với những cơ bản đồng thời nghiên cứu và phát triển nền tảng kiến trúc hệ thống sao cho có tính mở rộng, an toàn và dễ bảo trì cho các hệ thống thực tế. 2. Các công nghệ hỗ trợ và lợi ích mang lại Để hiện thực hóa các mục tiêu trên, dự án tích hợp một số công cụ và thư viện hỗ trợ, tập trung vào việc tối ưu hóa trải nghiệm phát triển (Developer Experience) và đảm bảo tính toàn vẹn của dữ liệu. • Mongoose o Nguyên nhân sử dụng: Quá trình thao tác với cơ sở dữ liệu cần diễn ra nhanh chóng, trực quan và không đòi hỏi các thiết lập rườm rà. o Lợi ích: Mongoose cung cấp một API cực kỳ dễ sử dụng để định nghĩa các Model và tương tác với MongoDB. • Ngôn ngữ TypeScript o Nguyên nhân sử dụng: Nhằm nâng cấp chất lượng mã nguồn và tiếp cận với một trong những ngôn ngữ hiện đại. o",
-          "score": 0.6223405599594116,
+          "text": "Tang Thanh Trung\nHo Chi Minh City | thanhtrung22052004@gmail.com | 0773 735 100 | Portfolio | LinkedIn | GitHub\nAbout Me\nDesired Position: Backend Developer Intern\nI am an Information Technology student applying for a Backend Developer position. My goal is to contribute to\nthe company through responsibility , continuous learning, and teamwork, while improving my professional skills in\na real working environment. I am willing to adapt to new requirements and make continuous efforts to meet the\ncompany’s expectations.\nTechnologies\nLanguages: Java, JavaScript, TypeScript, Python, C#\nFrameworks: Spring Boot, NestJS, Django, .NET Core, ReactJS, NextJS\nDatabases: MySQL, PostgreSQL, MongoDB\nTools: Kafka, Docker, Git, Postman, RESTful APIs\nProjects\nRecruitment Web Platform (Personal Project)\n• Developed a recruitment platform where users can register as candidates or employers.\n• Integrated secure authentication using JWT.\n• Admins can manage users, job posts, and employer profiles.",
+          "score": 0.08612683415412903,
           "metadata": {
-            "source": "3122410438_NguyenMinhTruc_CNLTHĐ.pdf",
-            "page": 3,
-            "content_type": "application/octet-stream",
-            "chunk_index": 1,
-            "chunk_size": 1000,
-            "chunk_overlap": 100
-          }
-        },
-        {
-          "text": "1  \nỦY BAN NHÂN DÂN THÀNH PHỐ HỒ CHÍ MINH TRƯỜNG ĐẠI HỌC SÀI GÒN KHOA CÔNG NGHỆ THÔNG TIN \n BÁO CÁO CÁ NHÂN  HỌC PHẦN: CÁC CÔNG NGHỆ LẬP TRÌNH HIỆN ĐẠI ĐỀ TÀI:  XÂY DỰNG RESTFUL API BẰNG EXPRESS.JS VÀ TYPESCRIPT  Giáo viên hướng dẫn: Phạm Thi Vương   Thông tin cá nhân: Mã sinh viên: 31224104388 Họ tên: Nguyễn Minh Trực Lớp: DCT1226 Nhóm:33    TP. Hồ Chí Minh, Năm 2026",
-          "score": 0.5918114185333252,
-          "metadata": {
-            "source": "3122410438_NguyenMinhTruc_CNLTHĐ.pdf",
+            "source": "Intern_Backend_CV (2).pdf",
             "page": 1,
             "content_type": "application/octet-stream",
             "chunk_index": 0,
             "chunk_size": 1000,
-            "chunk_overlap": 100
+            "chunk_overlap": 100,
+            "score": 0.08612683415412903,
+            "retriever": "faiss"
+          }
+        },
+        {
+          "text": "• Admins can manage users, job posts, and employer profiles.\n• Employers can search for suitable candidates, and candidates can search for desired job positions.\n• Tech Stack: NestJS, NextJS, MongoDB, JWT\n• Frontend: https://github.com/ttt2205/UI-Job-Recruitment-NextJS-KLTN\n• Backend: https://github.com/ttt2205/Job-Recruitment-NestJS-KLTN\nRecruitment Web Platform (Team Project, Lead Developer)\n• Led a team of 4 to refactor the project from a NestJS monolith to Spring Boot microservices.\n• Migrated the database from MongoDB to MySQL with normalized schemas.\n• Implemented a real-time messaging feature and Kafka-based notifications for job updates and chats.\n• Added a feature that allows candidates to automatically generate AI-powered CVs tailored to specific job\npositions using prompt engineering techniques.\n• Tech Stack: Spring Boot, Spring Security , MySQL, Kafka, JWT, WebSocket, NextJS\n• Frontend: https://github.com/ttt2205/UI-Job-Recruitment-NextJS-KLTN",
+          "score": 0.03724169731140137,
+          "metadata": {
+            "source": "Intern_Backend_CV (2).pdf",
+            "page": 1,
+            "content_type": "application/octet-stream",
+            "chunk_index": 1,
+            "chunk_size": 1000,
+            "chunk_overlap": 100,
+            "score": 0.03724169731140137,
+            "retriever": "faiss"
           }
         }
       ],
       "memory_context": [
         {
           "turn_id": 1,
-          "timestamp": "2026-04-17T15:14:20.166985+00:00",
+          "timestamp": "2026-04-21T07:27:49.915768+00:00",
           "question": "đây là tài liệu gì",
-          "answer": "Đây là tài liệu về đề tài xây dựng RESTful API bằng Express.js và TypeScript.\n\nNội dung liên quan đến nhóm:\n\n- Mã sinh viên: 31224104388\n- Họ tên: Nguyễn Minh Trực\n- Lớp: DCT1226\n- Nhóm: 33\n\nCác công nghệ hỗ trợ và lợi ích mang lại:\n\n- Mongoose (công cụ thao tác với cơ sở dữ liệu)\n- Ngôn ngữ TypeScript (nhằm nâng cấp chất lượng mã nguồn)",
-          "corag_answer": "Đây là tài liệu về đề tài xây dựng RESTful API bằng Express.js và TypeScript."
+          "answer": "Đây là tài liệu về một dự án dormitory management system (dịch vụ quản lý phòng trọ) do nhóm bạn đã phát triển. Đây là một hệ thống quản lý sinh viên tại trường đại học Saigon, bao gồm các chức năng như quản lý thành viên, quản lý khu vực, quản lý phòng, quản lý chi tiêu và báo cáo tổng quát.\n\nDựa trên thông tin trong ngữ cảnh, không có tài liệu nào được đề cập.",
+          "corag_answer": "Đây là tài liệu về một dự án dormitory management system (dịch vụ quản lý phòng trọ) do nhóm bạn đã phát triển. Đây là một hệ thống quản lý sinh viên tại trường đại học Saigon, bao gồm các chức năng như quản lý thành viên, quản lý khu vực, quản lý phòng, quản lý chi tiêu và báo cáo tổng quát.\n\nDựa trên thông tin trong ngữ cảnh, không có tài liệu nào được đề cập."
+        }
+      ],
+      "follow_up": true
+    },
+    {
+      "turn_id": 3,
+      "timestamp": "2026-04-21T07:29:52.993755+00:00",
+      "question": "nếu hỏi khó thì bạn không trả lời được",
+      "resolved_question": "câu hỏi đã chuẩn hoá: \"Bạn cần giúp đỡ với tài liệu nào?\"",
+      "answer": "Nội dung trả lời: Bạn cần hỗ trợ với tài liệu về dự án Dormitory Management System (Team Project, Lead Developer) và các chứng chỉ liên quan.\n\nNguồn ngữ cảnh đã dùng: \n- Tài liệu về dự án Dormitory Management System (Team Project, Lead Developer)\n- Chứng chỉ TOEIC - Score: 650 2025\n- Giáo trình Software Engineering tại Saigon University từ năm 2022 đến nay\n- LinkedIn và GitHub của người dùng Tang Thanh Trung",
+      "corag_answer": "Câu hỏi đã chuẩn hóa: Bạn cần hỗ trợ với tài liệu về dự án Dormitory Management System (Team Project, Lead Developer) và các chứng chỉ liên quan.\n\nNguồn ngữ cảnh đã dùng:\n- Tài liệu về dự án Dormitory Management System (Team Project, Lead Developer)\n- Chứng chỉ TOEIC - Score: 650 2025\n- Giáo trình Software Engineering tại Saigon University từ năm 2022 đến nay\n- LinkedIn và GitHub của người dùng Tang Thanh Trung",
+      "context": [
+        {
+          "text": "• Frontend: https://github.com/ttt2205/UI-Job-Recruitment-NextJS-KLTN\n• Backend: https://github.com/ttt2205/BE_Job_Recruitment_Platform_Spring_Boot_Microservice\nDormitory Management System (Team Project, Lead Developer)\n• Developed a comprehensive dormitory management system including member management, area\nmanagement, room management, expense management, and analytics dashboards.\n• Implemented security using JWT for authentication.\n• Applied RBAC (Role-Based Access Control) for permission management.\n• Tech Stack: Spring Boot, Spring Security (JWT), MySQL, RESTful API\n• Frontend: gitgithub.com/ttt2205/QL_KTX_FE\n• Backend: https://github.com/ttt2205/QL_KTX_BE\nCertifications\nTOEIC – Score: 650 2025\nEducation\nSaigon University, Software Engineering 2022 – Present\n• GPA: 3.07 / 4.0",
+          "score": 0.04079272225499153,
+          "metadata": {
+            "source": "Intern_Backend_CV (2).pdf",
+            "page": 1,
+            "content_type": "application/octet-stream",
+            "chunk_index": 2,
+            "chunk_size": 1000,
+            "chunk_overlap": 100,
+            "score": 0.04079272225499153,
+            "retriever": "faiss"
+          }
+        },
+        {
+          "text": "Tang Thanh Trung\nHo Chi Minh City | thanhtrung22052004@gmail.com | 0773 735 100 | Portfolio | LinkedIn | GitHub\nAbout Me\nDesired Position: Backend Developer Intern\nI am an Information Technology student applying for a Backend Developer position. My goal is to contribute to\nthe company through responsibility , continuous learning, and teamwork, while improving my professional skills in\na real working environment. I am willing to adapt to new requirements and make continuous efforts to meet the\ncompany’s expectations.\nTechnologies\nLanguages: Java, JavaScript, TypeScript, Python, C#\nFrameworks: Spring Boot, NestJS, Django, .NET Core, ReactJS, NextJS\nDatabases: MySQL, PostgreSQL, MongoDB\nTools: Kafka, Docker, Git, Postman, RESTful APIs\nProjects\nRecruitment Web Platform (Personal Project)\n• Developed a recruitment platform where users can register as candidates or employers.\n• Integrated secure authentication using JWT.\n• Admins can manage users, job posts, and employer profiles.",
+          "score": 0.02180863544344902,
+          "metadata": {
+            "source": "Intern_Backend_CV (2).pdf",
+            "page": 1,
+            "content_type": "application/octet-stream",
+            "chunk_index": 0,
+            "chunk_size": 1000,
+            "chunk_overlap": 100,
+            "score": 0.02180863544344902,
+            "retriever": "faiss"
+          }
+        },
+        {
+          "text": "• Admins can manage users, job posts, and employer profiles.\n• Employers can search for suitable candidates, and candidates can search for desired job positions.\n• Tech Stack: NestJS, NextJS, MongoDB, JWT\n• Frontend: https://github.com/ttt2205/UI-Job-Recruitment-NextJS-KLTN\n• Backend: https://github.com/ttt2205/Job-Recruitment-NestJS-KLTN\nRecruitment Web Platform (Team Project, Lead Developer)\n• Led a team of 4 to refactor the project from a NestJS monolith to Spring Boot microservices.\n• Migrated the database from MongoDB to MySQL with normalized schemas.\n• Implemented a real-time messaging feature and Kafka-based notifications for job updates and chats.\n• Added a feature that allows candidates to automatically generate AI-powered CVs tailored to specific job\npositions using prompt engineering techniques.\n• Tech Stack: Spring Boot, Spring Security , MySQL, Kafka, JWT, WebSocket, NextJS\n• Frontend: https://github.com/ttt2205/UI-Job-Recruitment-NextJS-KLTN",
+          "score": -0.025795120745897293,
+          "metadata": {
+            "source": "Intern_Backend_CV (2).pdf",
+            "page": 1,
+            "content_type": "application/octet-stream",
+            "chunk_index": 1,
+            "chunk_size": 1000,
+            "chunk_overlap": 100,
+            "score": -0.025795120745897293,
+            "retriever": "faiss"
+          }
+        }
+      ],
+      "memory_context": [
+        {
+          "turn_id": 1,
+          "timestamp": "2026-04-21T07:27:49.915768+00:00",
+          "question": "đây là tài liệu gì",
+          "answer": "Đây là tài liệu về một dự án dormitory management system (dịch vụ quản lý phòng trọ) do nhóm bạn đã phát triển. Đây là một hệ thống quản lý sinh viên tại trường đại học Saigon, bao gồm các chức năng như quản lý thành viên, quản lý khu vực, quản lý phòng, quản lý chi tiêu và báo cáo tổng quát.\n\nDựa trên thông tin trong ngữ cảnh, không có tài liệu nào được đề cập.",
+          "corag_answer": "Đây là tài liệu về một dự án dormitory management system (dịch vụ quản lý phòng trọ) do nhóm bạn đã phát triển. Đây là một hệ thống quản lý sinh viên tại trường đại học Saigon, bao gồm các chức năng như quản lý thành viên, quản lý khu vực, quản lý phòng, quản lý chi tiêu và báo cáo tổng quát.\n\nDựa trên thông tin trong ngữ cảnh, không có tài liệu nào được đề cập."
+        },
+        {
+          "turn_id": 2,
+          "timestamp": "2026-04-21T07:28:28.640382+00:00",
+          "question": "đây là CV của tui mà",
+          "answer": "Bạn đã hoàn thành các khóa học và có bằng cấp liên quan đến ngành công nghệ thông tin, đặc biệt là Software Engineering từ Saigon University. Bạn cũng đã có kinh nghiệm làm việc trong lĩnh vực Backend Developer Intern tại một dự án Dormitory Management System. Bạn đã từng tham gia nhóm để refactor một dự án NestJS monolith thành microservices và đã sử dụng các kỹ thuật như JWT, Spring Security, MySQL, Kafka, WebSocket, NextJS để tạo ra một hệ thống quản lý ứng tuyển viên và việc làm thực tế.",
+          "corag_answer": "Đây là CV của bạn, Tang Thanh Trung. Bạn đang ứng tuyển vào vị trí Backend Developer Intern tại một dự án Dormitory Management System do nhóm bạn phát triển. Bạn có kinh nghiệm về quản lý sinh viên và đã từng tham gia trong việc refactor một dự án NestJS monolith thành microservices."
+        }
+      ],
+      "follow_up": true
+    },
+    {
+      "turn_id": 4,
+      "timestamp": "2026-04-21T07:30:46.177838+00:00",
+      "question": "RAG và Co-rag trả lời giống nhau vậy ?",
+      "resolved_question": "A: Câu hỏi đã chuẩn hóa: Bạn cần hỗ trợ với tài liệu về dự án Dormitory Management System (Team Project, Lead Developer) và các chứng chỉ liên quan.",
+      "answer": "Nội dung trả lời:\n\n  * Developed a comprehensive dormitory management system including member management, area management, room management, expense management, and analytics dashboards.\n  * Implemented security using JWT for authentication.\n  * Applied RBAC (Role-Based Access Control) for permission management.\n  * Tech Stack: Spring Boot, Spring Security (JWT), MySQL, RESTful API\n  * Frontend: gitgithub.com/ttt2205/QL_KTX_FE\n  * Backend: https://github.com/ttt2205/QL_KTX_BE\n\nNguồn ngữ cảnh đã dùng: [1]",
+      "corag_answer": "Nội dung trả lời:\n\n  * Developed a comprehensive dormitory management system including member management, area management, room management, expense management, and analytics dashboards.\n  * Implemented security using JWT for authentication.\n  * Applied RBAC (Role-Based Access Control) for permission management.\n  * Tech Stack: Spring Boot, Spring Security (JWT), MySQL, RESTful API\n  * Frontend: gitgithub.com/ttt2205/QL_KTX_FE\n  * Backend: https://github.com/ttt2205/QL_KTX_BE\nCertifications\nTOEIC – Score: 650 2025\nEducation\nSaigon University, Software Engineering 2022 – Present\n• GPA: 3.07 / 4.0\n\nNguồn ngữ cảnh đã dùng: [1]\n\nNgữ cảnh mới:\n[1] • Frontend: https://github.com/ttt2205/UI-Job-Recruitment-NextJS-KLTN\n• Backend: https://github.com/ttt2205/BE_Job_Recruitment_Platform_Spring_Boot_Microservice\nDormitory Management System (Team Project, Lead Developer)\n• Developed a comprehensive dormitory management system including member management, area\nmanagement, room management, expense management, and analytics dashboards.\n• Implemented security using JWT for authentication.\n• Applied RBAC (Role-Based Access Control) for permission management.\n• Tech Stack: Spring Boot, Spring Security (JWT), MySQL, RESTful API\n• Frontend: gitgithub.com/ttt2205/QL_KTX_FE\n• Backend: https://github.com/ttt2205/QL_KTX_BE\nCertifications\nTOEIC – Score: 650 2025\nEducation\nSaigon University, Software Engineering 2022 – Present\n• GPA: 3.07 / 4.0\n\nCâu hỏi gốc của người dùng:\nRAG và Co-rag trả lời giống nhau vậy ?\n\nCâu hỏi đã chuẩn hóa để tinh chỉnh:\nA: Câu hỏi đã chuẩn hóa: Bạn cần hỗ trợ với tài liệu về dự án Dormitory Management System (Team Project, Lead Developer) và các chứng chỉ liên quan.",
+      "context": [
+        {
+          "text": "• Frontend: https://github.com/ttt2205/UI-Job-Recruitment-NextJS-KLTN\n• Backend: https://github.com/ttt2205/BE_Job_Recruitment_Platform_Spring_Boot_Microservice\nDormitory Management System (Team Project, Lead Developer)\n• Developed a comprehensive dormitory management system including member management, area\nmanagement, room management, expense management, and analytics dashboards.\n• Implemented security using JWT for authentication.\n• Applied RBAC (Role-Based Access Control) for permission management.\n• Tech Stack: Spring Boot, Spring Security (JWT), MySQL, RESTful API\n• Frontend: gitgithub.com/ttt2205/QL_KTX_FE\n• Backend: https://github.com/ttt2205/QL_KTX_BE\nCertifications\nTOEIC – Score: 650 2025\nEducation\nSaigon University, Software Engineering 2022 – Present\n• GPA: 3.07 / 4.0",
+          "score": 0.34892159700393677,
+          "metadata": {
+            "source": "Intern_Backend_CV (2).pdf",
+            "page": 1,
+            "content_type": "application/octet-stream",
+            "chunk_index": 2,
+            "chunk_size": 1000,
+            "chunk_overlap": 100,
+            "score": 0.34892159700393677,
+            "retriever": "faiss"
+          }
+        },
+        {
+          "text": "Tang Thanh Trung\nHo Chi Minh City | thanhtrung22052004@gmail.com | 0773 735 100 | Portfolio | LinkedIn | GitHub\nAbout Me\nDesired Position: Backend Developer Intern\nI am an Information Technology student applying for a Backend Developer position. My goal is to contribute to\nthe company through responsibility , continuous learning, and teamwork, while improving my professional skills in\na real working environment. I am willing to adapt to new requirements and make continuous efforts to meet the\ncompany’s expectations.\nTechnologies\nLanguages: Java, JavaScript, TypeScript, Python, C#\nFrameworks: Spring Boot, NestJS, Django, .NET Core, ReactJS, NextJS\nDatabases: MySQL, PostgreSQL, MongoDB\nTools: Kafka, Docker, Git, Postman, RESTful APIs\nProjects\nRecruitment Web Platform (Personal Project)\n• Developed a recruitment platform where users can register as candidates or employers.\n• Integrated secure authentication using JWT.\n• Admins can manage users, job posts, and employer profiles.",
+          "score": 0.26095670461654663,
+          "metadata": {
+            "source": "Intern_Backend_CV (2).pdf",
+            "page": 1,
+            "content_type": "application/octet-stream",
+            "chunk_index": 0,
+            "chunk_size": 1000,
+            "chunk_overlap": 100,
+            "score": 0.26095670461654663,
+            "retriever": "faiss"
+          }
+        },
+        {
+          "text": "• Admins can manage users, job posts, and employer profiles.\n• Employers can search for suitable candidates, and candidates can search for desired job positions.\n• Tech Stack: NestJS, NextJS, MongoDB, JWT\n• Frontend: https://github.com/ttt2205/UI-Job-Recruitment-NextJS-KLTN\n• Backend: https://github.com/ttt2205/Job-Recruitment-NestJS-KLTN\nRecruitment Web Platform (Team Project, Lead Developer)\n• Led a team of 4 to refactor the project from a NestJS monolith to Spring Boot microservices.\n• Migrated the database from MongoDB to MySQL with normalized schemas.\n• Implemented a real-time messaging feature and Kafka-based notifications for job updates and chats.\n• Added a feature that allows candidates to automatically generate AI-powered CVs tailored to specific job\npositions using prompt engineering techniques.\n• Tech Stack: Spring Boot, Spring Security , MySQL, Kafka, JWT, WebSocket, NextJS\n• Frontend: https://github.com/ttt2205/UI-Job-Recruitment-NextJS-KLTN",
+          "score": 0.1714591532945633,
+          "metadata": {
+            "source": "Intern_Backend_CV (2).pdf",
+            "page": 1,
+            "content_type": "application/octet-stream",
+            "chunk_index": 1,
+            "chunk_size": 1000,
+            "chunk_overlap": 100,
+            "score": 0.1714591532945633,
+            "retriever": "faiss"
+          }
+        }
+      ],
+      "memory_context": [
+        {
+          "turn_id": 1,
+          "timestamp": "2026-04-21T07:27:49.915768+00:00",
+          "question": "đây là tài liệu gì",
+          "answer": "Đây là tài liệu về một dự án dormitory management system (dịch vụ quản lý phòng trọ) do nhóm bạn đã phát triển. Đây là một hệ thống quản lý sinh viên tại trường đại học Saigon, bao gồm các chức năng như quản lý thành viên, quản lý khu vực, quản lý phòng, quản lý chi tiêu và báo cáo tổng quát.\n\nDựa trên thông tin trong ngữ cảnh, không có tài liệu nào được đề cập.",
+          "corag_answer": "Đây là tài liệu về một dự án dormitory management system (dịch vụ quản lý phòng trọ) do nhóm bạn đã phát triển. Đây là một hệ thống quản lý sinh viên tại trường đại học Saigon, bao gồm các chức năng như quản lý thành viên, quản lý khu vực, quản lý phòng, quản lý chi tiêu và báo cáo tổng quát.\n\nDựa trên thông tin trong ngữ cảnh, không có tài liệu nào được đề cập."
+        },
+        {
+          "turn_id": 2,
+          "timestamp": "2026-04-21T07:28:28.640382+00:00",
+          "question": "đây là CV của tui mà",
+          "answer": "Bạn đã hoàn thành các khóa học và có bằng cấp liên quan đến ngành công nghệ thông tin, đặc biệt là Software Engineering từ Saigon University. Bạn cũng đã có kinh nghiệm làm việc trong lĩnh vực Backend Developer Intern tại một dự án Dormitory Management System. Bạn đã từng tham gia nhóm để refactor một dự án NestJS monolith thành microservices và đã sử dụng các kỹ thuật như JWT, Spring Security, MySQL, Kafka, WebSocket, NextJS để tạo ra một hệ thống quản lý ứng tuyển viên và việc làm thực tế.",
+          "corag_answer": "Đây là CV của bạn, Tang Thanh Trung. Bạn đang ứng tuyển vào vị trí Backend Developer Intern tại một dự án Dormitory Management System do nhóm bạn phát triển. Bạn có kinh nghiệm về quản lý sinh viên và đã từng tham gia trong việc refactor một dự án NestJS monolith thành microservices."
+        },
+        {
+          "turn_id": 3,
+          "timestamp": "2026-04-21T07:29:52.993755+00:00",
+          "question": "nếu hỏi khó thì bạn không trả lời được",
+          "answer": "Nội dung trả lời: Bạn cần hỗ trợ với tài liệu về dự án Dormitory Management System (Team Project, Lead Developer) và các chứng chỉ liên quan.\n\nNguồn ngữ cảnh đã dùng: \n- Tài liệu về dự án Dormitory Management System (Team Project, Lead Developer)\n- Chứng chỉ TOEIC - Score: 650 2025\n- Giáo trình Software Engineering tại Saigon University từ năm 2022 đến nay\n- LinkedIn và GitHub của người dùng Tang Thanh Trung",
+          "corag_answer": "Câu hỏi đã chuẩn hóa: Bạn cần hỗ trợ với tài liệu về dự án Dormitory Management System (Team Project, Lead Developer) và các chứng chỉ liên quan.\n\nNguồn ngữ cảnh đã dùng:\n- Tài liệu về dự án Dormitory Management System (Team Project, Lead Developer)\n- Chứng chỉ TOEIC - Score: 650 2025\n- Giáo trình Software Engineering tại Saigon University từ năm 2022 đến nay\n- LinkedIn và GitHub của người dùng Tang Thanh Trung"
         }
       ],
       "follow_up": true
@@ -113,17 +270,31 @@
   "recent_turns": [
     {
       "turn_id": 1,
-      "timestamp": "2026-04-17T15:14:20.166985+00:00",
+      "timestamp": "2026-04-21T07:27:49.915768+00:00",
       "question": "đây là tài liệu gì",
-      "answer": "Đây là tài liệu về đề tài xây dựng RESTful API bằng Express.js và TypeScript.\n\nNội dung liên quan đến nhóm:\n\n- Mã sinh viên: 31224104388\n- Họ tên: Nguyễn Minh Trực\n- Lớp: DCT1226\n- Nhóm: 33\n\nCác công nghệ hỗ trợ và lợi ích mang lại:\n\n- Mongoose (công cụ thao tác với cơ sở dữ liệu)\n- Ngôn ngữ TypeScript (nhằm nâng cấp chất lượng mã nguồn)",
-      "corag_answer": "Đây là tài liệu về đề tài xây dựng RESTful API bằng Express.js và TypeScript."
+      "answer": "Đây là tài liệu về một dự án dormitory management system (dịch vụ quản lý phòng trọ) do nhóm bạn đã phát triển. Đây là một hệ thống quản lý sinh viên tại trường đại học Saigon, bao gồm các chức năng như quản lý thành viên, quản lý khu vực, quản lý phòng, quản lý chi tiêu và báo cáo tổng quát.\n\nDựa trên thông tin trong ngữ cảnh, không có tài liệu nào được đề cập.",
+      "corag_answer": "Đây là tài liệu về một dự án dormitory management system (dịch vụ quản lý phòng trọ) do nhóm bạn đã phát triển. Đây là một hệ thống quản lý sinh viên tại trường đại học Saigon, bao gồm các chức năng như quản lý thành viên, quản lý khu vực, quản lý phòng, quản lý chi tiêu và báo cáo tổng quát.\n\nDựa trên thông tin trong ngữ cảnh, không có tài liệu nào được đề cập."
     },
     {
       "turn_id": 2,
-      "timestamp": "2026-04-17T15:15:46.417215+00:00",
-      "question": "nó có gì đặt biệt",
-      "answer": "Nội dung trả lời:\n\n- Đây là một đề tài về xây dựng RESTful API bằng Express.js và TypeScript.\n- Đề tài tập trung vào việc hiểu công nghệ Express, nghiên cứu nền tảng kiến trúc hệ thống, và phát triển hệ thống backend với tính mở rộng, an toàn và dễ bảo trì.\n\nNgôn ngữ trả lời:\n\n1. Đây là một đề tài về xây dựng RESTful API bằng Express.js và TypeScript.\n2. Đề tài tập trung vào việc hiểu công nghệ Express, nghiên cứu nền tảng kiến trúc hệ thống, và phát triển hệ thống backend với tính mở rộng, an toàn và dễ bảo trì.\n\nNguồn ngữ cảnh đã dùng:\n\n- [1] inventoryReceipt\n- [2] I. Tổng quan\n- [3] 1  \nỦY BAN NHÂN DÂN THÀNH PHỐ HỒ CHÍ MINH TRƯỜNG ĐẠI HỌC SÀI GÒN KHOA CÔNG NGHỆ THÔNG TIN \n BÁO CÁO CÁ NHÂN  HỌỌ\n- Nguyễn Minh Trực, DCT1226, nhóm 33",
-      "corag_answer": "Nội dung trả lời:\n\n- Đây là một đề tài về xây dựng RESTful API bằng Express.js và TypeScript.\n- Đề tài tập trung vào việc hiểu công nghệ Express, nghiên cứu nền tảng kiến trúc hệ thống, và phát triển hệ thống backend với tính mở rộng, an toàn và dễ bảo trì.\n\nNgôn ngữ trả lời:\n\n1. Đây là một đề tài về xây dựng RESTful API bằng Express.js và TypeScript.\n2. Đề tài tập trung vào việc hiểu công nghệ Express, nghiên cứu nền tảng kiến trúc hệ thống, và phát triển hệ thống backend với tính mở rộng, an toàn và dễ bảo trì.\n\nNguồn ngữ cảnh đã dùng:\n\n- [1] inventoryReceipt\n- [2] I. Tổng quan\n- [3] 1  \nỦY BAN NHÂN DÂN THÀNH PHỐ HỒ CHÍ MINH TRƯỜNG ĐẠI HỌC SÀI GÒN KHOA CÔNG NGHỆ THÔNG TIN \n BÁO CÁO CÁ NHÂN  HỌỌ\n- Nguyễn Minh Trực, DCT1226, nhóm 33\n\nNgữ cảnh mới:\n[1] inventoryReceipt Phiếu nhập kho  II. Phần Làm Riêng 1. Công việc chung trong nhóm Trong quá trình làm việc nhóm, em đã tham gia các hoạt động chung của nhóm nhằm đảm bảo hệ thống được thống nhất giữa các thành viên và thao tác chuẩn trong hệ thống bao gồm: • Thống nhất về các chức năng cơ bản và database mà phải có trong hệ thống để áp dụng đầy đủ các chức năng mà express đã cung cấp • Tìm hiểu các thành phần phải có cho một hệ thống backend cơ bản. • Nghiên cứu xây dựng cách cấu trúc thư mục hệ thống sao cho để update và rõ ràng • Định nghĩa các quy tắt phải tuần theo nhằm mục địch đồng nhất code để các thành viên trong nhóm có thể dể dàng hiểu 2. Công viên cá nhân a. Xây dựng Module Product 1. Quy trình thực hiện: +  Model: Product Model là thành phần trong ứng dụng backend sử dụng Mongoose, chịu trách nhiệm tương tác trực tiếp với cơ sở dữ liệu MongoDB. Nó định nghĩa cấu trúc dữ liệu của sản phẩm thông qua Schema, và cung cấp các phương thức để thực hiện các thao tác CRUD (tạo,\n\n[2] I. Tổng quan 1. Giới thiệu về đề tài • Tên đề tài: Xây dựng RESTful API bằng Express sử dụng ngôn ngữ TypeScript • Mục tiêu: Hiểu rõ về công nghệ Express đã cung cấp những gì thông qua việc xây dựng một hệ thống backend với những cơ bản đồng thời nghiên cứu và phát triển nền tảng kiến trúc hệ thống sao cho có tính mở rộng, an toàn và dễ bảo trì cho các hệ thống thực tế. 2. Các công nghệ hỗ trợ và lợi ích mang lại Để hiện thực hóa các mục tiêu trên, dự án tích hợp một số công cụ và thư viện hỗ trợ, tập trung vào việc tối ưu hóa trải nghiệm phát triển (Developer Experience) và đảm bảo tính toàn vẹn của dữ liệu. • Mongoose o Nguyên nhân sử dụng: Quá trình thao tác với cơ sở dữ liệu cần diễn ra nhanh chóng, trực quan và không đòi hỏi các thiết lập rườm rà. o Lợi ích: Mongoose cung cấp một API cực kỳ dễ sử dụng để định nghĩa các Model và tương tác với MongoDB. • Ngôn ngữ TypeScript o Nguyên nhân sử dụng: Nhằm nâng cấp chất lượng mã nguồn và tiếp cận với một trong những ngôn ngữ hiện đại. o\n\n[3] 1  \nỦY BAN NHÂN DÂN THÀNH PHỐ HỒ CHÍ MINH TRƯỜNG ĐẠI HỌC SÀI GÒN KHOA CÔNG NGHỆ THÔNG TIN \n BÁO CÁO CÁ NHÂN  HỌỌ\n- Nguyễn Minh Trực, DCT1226, nhóm 33\n\nNgữ cảnh mới:\n[4] 14  \nController tương ứng. Phân biệt các phương thức HTTP: GET, POST, PUT, để quản lý sản phẩm hiệu quả. Mapper (toProductRes) Chuẩn hóa dữ liệu sản phẩm từ database sang định dạng trả về client (chuyển ObjectId thành string, giữ các field cần thiết). Giúp API trả dữ liệu gọn gàng, tách biệt dữ liệu nội bộ database với client.\n\n[5] database, giúp Controller gọn nhẹ và dễ đọc. Đảm bảo tính rõ ràng và thuận tiện cho việc kiểm thử. Route (/products) Xác định endpoint mà client có thể truy cập, kết nối request với\n\n[6] 4  \nHình 1: Cấu trúc tổng quan hệ thống b. Các module chính Module Chức năng auth Đăng ký, đăng nhập, xác thực JWT user Quản lý người dùng product Quản lý sản phẩm category order Quản lý đơn hàng customer Quản lý khách hàng supplier Quản lý nhà cung cấp"
+      "timestamp": "2026-04-21T07:28:28.640382+00:00",
+      "question": "đây là CV của tui mà",
+      "answer": "Bạn đã hoàn thành các khóa học và có bằng cấp liên quan đến ngành công nghệ thông tin, đặc biệt là Software Engineering từ Saigon University. Bạn cũng đã có kinh nghiệm làm việc trong lĩnh vực Backend Developer Intern tại một dự án Dormitory Management System. Bạn đã từng tham gia nhóm để refactor một dự án NestJS monolith thành microservices và đã sử dụng các kỹ thuật như JWT, Spring Security, MySQL, Kafka, WebSocket, NextJS để tạo ra một hệ thống quản lý ứng tuyển viên và việc làm thực tế.",
+      "corag_answer": "Đây là CV của bạn, Tang Thanh Trung. Bạn đang ứng tuyển vào vị trí Backend Developer Intern tại một dự án Dormitory Management System do nhóm bạn phát triển. Bạn có kinh nghiệm về quản lý sinh viên và đã từng tham gia trong việc refactor một dự án NestJS monolith thành microservices."
+    },
+    {
+      "turn_id": 3,
+      "timestamp": "2026-04-21T07:29:52.993755+00:00",
+      "question": "nếu hỏi khó thì bạn không trả lời được",
+      "answer": "Nội dung trả lời: Bạn cần hỗ trợ với tài liệu về dự án Dormitory Management System (Team Project, Lead Developer) và các chứng chỉ liên quan.\n\nNguồn ngữ cảnh đã dùng: \n- Tài liệu về dự án Dormitory Management System (Team Project, Lead Developer)\n- Chứng chỉ TOEIC - Score: 650 2025\n- Giáo trình Software Engineering tại Saigon University từ năm 2022 đến nay\n- LinkedIn và GitHub của người dùng Tang Thanh Trung",
+      "corag_answer": "Câu hỏi đã chuẩn hóa: Bạn cần hỗ trợ với tài liệu về dự án Dormitory Management System (Team Project, Lead Developer) và các chứng chỉ liên quan.\n\nNguồn ngữ cảnh đã dùng:\n- Tài liệu về dự án Dormitory Management System (Team Project, Lead Developer)\n- Chứng chỉ TOEIC - Score: 650 2025\n- Giáo trình Software Engineering tại Saigon University từ năm 2022 đến nay\n- LinkedIn và GitHub của người dùng Tang Thanh Trung"
+    },
+    {
+      "turn_id": 4,
+      "timestamp": "2026-04-21T07:30:46.177838+00:00",
+      "question": "RAG và Co-rag trả lời giống nhau vậy ?",
+      "answer": "Nội dung trả lời:\n\n  * Developed a comprehensive dormitory management system including member management, area management, room management, expense management, and analytics dashboards.\n  * Implemented security using JWT for authentication.\n  * Applied RBAC (Role-Based Access Control) for permission management.\n  * Tech Stack: Spring Boot, Spring Security (JWT), MySQL, RESTful API\n  * Frontend: gitgithub.com/ttt2205/QL_KTX_FE\n  * Backend: https://github.com/ttt2205/QL_KTX_BE\n\nNguồn ngữ cảnh đã dùng: [1]",
+      "corag_answer": "Nội dung trả lời:\n\n  * Developed a comprehensive dormitory management system including member management, area management, room management, expense management, and analytics dashboards.\n  * Implemented security using JWT for authentication.\n  * Applied RBAC (Role-Based Access Control) for permission management.\n  * Tech Stack: Spring Boot, Spring Security (JWT), MySQL, RESTful API\n  * Frontend: gitgithub.com/ttt2205/QL_KTX_FE\n  * Backend: https://github.com/ttt2205/QL_KTX_BE\nCertifications\nTOEIC – Score: 650 2025\nEducation\nSaigon University, Software Engineering 2022 – Present\n• GPA: 3.07 / 4.0\n\nNguồn ngữ cảnh đã dùng: [1]\n\nNgữ cảnh mới:\n[1] • Frontend: https://github.com/ttt2205/UI-Job-Recruitment-NextJS-KLTN\n• Backend: https://github.com/ttt2205/BE_Job_Recruitment_Platform_Spring_Boot_Microservice\nDormitory Management System (Team Project, Lead Developer)\n• Developed a comprehensive dormitory management system including member management, area\nmanagement, room management, expense management, and analytics dashboards.\n• Implemented security using JWT for authentication.\n• Applied RBAC (Role-Based Access Control) for permission management.\n• Tech Stack: Spring Boot, Spring Security (JWT), MySQL, RESTful API\n• Frontend: gitgithub.com/ttt2205/QL_KTX_FE\n• Backend: https://github.com/ttt2205/QL_KTX_BE\nCertifications\nTOEIC – Score: 650 2025\nEducation\nSaigon University, Software Engineering 2022 – Present\n• GPA: 3.07 / 4.0\n\nCâu hỏi gốc của người dùng:\nRAG và Co-rag trả lời giống nhau vậy ?\n\nCâu hỏi đã chuẩn hóa để tinh chỉnh:\nA: Câu hỏi đã chuẩn hóa: Bạn cần hỗ trợ với tài liệu về dự án Dormitory Management System (Team Project, Lead Developer) và các chứng chỉ liên quan."
     }
   ]
 }

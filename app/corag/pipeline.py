@@ -34,6 +34,7 @@ def generate_corag_answer(
     rounds: int = DEFAULT_CORAG_ROUNDS,
     memory_turns: list[dict] | None = None,
     original_question: str | None = None,
+    use_hybrid_search: bool | None = None,
 ) -> tuple[str, list[dict], list[dict]]:
     """
     Generate answer with iterative corrective retrieval and per-round trace.
@@ -62,7 +63,17 @@ def generate_corag_answer(
         # CORAG starts higher than base RAG to differentiate from simple RAG approach
         # Round 1: base_top_k * 2, Round 2: base_top_k * 2 + 2, Round 3: base_top_k * 2 + 4
         round_top_k = base_top_k * 2 + (round_no - 1) * 2
-        retrieved_chunks = retrieve_top_k_chunks(question=question, top_k=round_top_k)
+
+        # Reuse the initial RAG context on the first Co-RAG pass to avoid a duplicate
+        # hybrid retrieval round for the same question.
+        if round_no == 1 and working_context:
+            retrieved_chunks = []
+        else:
+            retrieved_chunks = retrieve_top_k_chunks(
+                question=question,
+                top_k=round_top_k,
+                use_hybrid_search=use_hybrid_search,
+            )
 
         merged: list[dict] = []
         merged.extend(working_context)

@@ -258,12 +258,16 @@ def ask_question():
     question = payload.get("question")
     conversation_id = payload.get("conversation_id")
     corag_rounds = payload.get("corag_rounds", 1)
+    use_hybrid_search = payload.get("use_hybrid_search")
 
     if not isinstance(question, str) or not question.strip():
         return error_response("Field 'question' is required and must be a non-empty string.", 400)
 
     if not isinstance(corag_rounds, int):
         return error_response("Field 'corag_rounds' must be an integer.", 400)
+
+    if use_hybrid_search is not None and not isinstance(use_hybrid_search, bool):
+        return error_response("Field 'use_hybrid_search' must be a boolean when provided.", 400)
 
     question = question.strip()
 
@@ -294,7 +298,11 @@ def ask_question():
     # RAG step 1-3:
     # User question -> embedding -> similarity search -> retrieve top-k chunks
     try:
-        context_chunks = retrieve_top_k_chunks(question=resolved_question, top_k=config.TOP_K)
+        context_chunks = retrieve_top_k_chunks(
+            question=resolved_question,
+            top_k=config.TOP_K,
+            use_hybrid_search=use_hybrid_search,
+        )
     except FileNotFoundError:
         return error_response(
             "Vector store not found. Please upload a file first via POST /api/upload.",
@@ -321,6 +329,7 @@ def ask_question():
             rounds=corag_rounds,
             memory_turns=memory_turns,
             original_question=question,
+            use_hybrid_search=use_hybrid_search,
         )
     except Exception as exc:
         return error_response("Co-RAG generation failed", 500, details={"detail": str(exc)})
@@ -349,6 +358,7 @@ def ask_question():
             "turn_id": turn.get("turn_id"),
             "original_question": question,
             "resolved_question": resolved_question,
+            "use_hybrid_search": config.USE_HYBRID_SEARCH if use_hybrid_search is None else use_hybrid_search,
             "rag_answer": rag_answer,
             "corag_answer": corag_answer,
             "corag_trace": corag_trace,
