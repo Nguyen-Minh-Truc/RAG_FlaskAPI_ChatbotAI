@@ -1,0 +1,135 @@
+{
+  "generated_at": "2026-04-21T09:05:53.745602+00:00",
+  "conversation_id": "1",
+  "corag_rounds": 2,
+  "use_hybrid_search": true,
+  "base_metadata_filters": {
+    "sources": [],
+    "file_types": [],
+    "document_ids": [],
+    "upload_date_from": null,
+    "upload_date_to": null
+  },
+  "questions": [
+    "2 cv khác nhau chỗ nào"
+  ],
+  "rows": [
+    {
+      "document_id": "c4e2b51d-cae5-4d16-a69b-433266c8ef10",
+      "source": "CV-backend.pdf",
+      "file_type": "pdf",
+      "upload_date": "2026-04-21T08:43:12.494515+00:00",
+      "questions_count": 1,
+      "avg_rag_latency_sec": 7.7258,
+      "avg_corag_latency_sec": 36.2163,
+      "avg_similarity_ratio": 0.1967,
+      "avg_rag_retrieval_score": 0.1476,
+      "avg_corag_retrieval_score": 0.1476,
+      "question_results": [
+        {
+          "question": "2 cv khác nhau chỗ nào",
+          "retrieval_latency_sec": 7.3163,
+          "rag_latency_sec": 7.7258,
+          "corag_latency_sec": 36.2163,
+          "similarity_ratio": 0.1967,
+          "rag_answer": "Nội dung trả lời:\n\n- Cả hai CV đều liên quan đến ngành Công nghệ thông tin và ứng dụng cho một vị trí Backend Developer.\n\n- Cả hai CV đều đề cập đến kỹ năng sử dụng các ngôn ngữ lập trình như Java, JavaScript, TypeScript, Spring Boot, NestJS, ReactJS, NextJS, MySQL, PostgreSQL, Docker, Git, Postman, RESTful APIs.\n\n- Cả hai CV đều nêu rõ mục tiêu của ứng viên là đóng góp cho công ty thông qua trách nhiệm, học hỏi liên tục và hợp tác, đồng thời cải thiện kỹ năng chuyên môn trong một môi trường làm việc thực tế.\n\n- Cả hai CV đều đề cập đến các kỹ thuật như Spring Security với JWT authentication, RBAC (Role-Based Access Control) bằng cách sử dụng interceptor-based authorization, và unit testing với Spring Test và JUnit.\n\n- Cả hai CV đều nêu rõ mục tiêu của ứng viên là thích ứng với yêu cầu mới và cố gắng đáp ứng mong đợi một cách tốt nhất.\n\n- Cả hai CV đều đề cập đến các dự án như Mini Shop Management System, trong đó có các chức năng như quản lý sản phẩm, xử lý đơn hàng và quản lý kho hàng tự động hóa dựa trên số lượng nhập hàng và đơn hàng.",
+          "corag_answer": "Câu hỏi đã được chuẩn hóa và tinh chỉnh:\n\n2 CV khác nhau chỗ nào\n\nNgữ cảnh mới:\n[1] Nguyen Minh Truc\nHo Chi Minh City, Việt Nam\nminhtruc25012004@gmail.com — 03783-8976\nGitHub\nAbout Me\nDesired Position: Backend Developer Intern I am an Information Technology student applying for a Backend Developer position. My goal is to contribute to the company through responsibility, continuous learning, and teamwork, while improving my professional skills in a real working environment. I am willing to adapt to new requirements and continuously strive to meet expectations.\nTechnologies\nLanguages: Java, JavaScript, TypeScript,\nFrameworks: Spring Boot, NestJS, ReactJS, NextJS\nDatabases: MySQL, PostgreSQL\nTools: Docker, Git, Postman, RESTful APIs\nProjects\nMini Shop Management System\nThe Mini Shop Management System is designed to support sales, order processing, and inventory management for small businesses.\n1.1 Key Features\n•Product management: create, update, categorize products\n•Order management: handle order creation and status tracking\n\n[2] •Order management: handle order creation and status tracking\n•Inventory management: automatically updated based on stock-in and orders\n•A WS S3 integration for image storage\n1.2 Technical Highlights\n•Built with Spring Boot and RESTful APIs\n•Spring Security with JWT authentication\n•Role-based access control (RBAC) using interceptor-based authorization\n•MySQL for data persistence\n•Unit testing with Spring Test and JUnit\nSource Code:\n•Backend: https://github.com/Nguyen-Minh-Truc/MiniShop\n•Frontend: https://github.com/Nguyen-Minh-Truc/FE MiniShop\nLanguage: English\nEducation: Saigon University, Software Engineering (2022 – Present)\nGPA: 2.7 / 4.0\n\nCâu hỏi đã chuẩn hóa và tinh chỉnh:\n- Cả hai CV đều liên quan đến ngành Công nghệ thông tin và ứng dụng cho một vị trí Backend Developer.\n- Cả hai CV đều đề cập đến kỹ năng sử dụng các ngôn ngữ lập trình như Java, JavaScript, TypeScript, Spring Boot, NestJS, ReactJS, NextJS, MySQL, PostgreSQL, Docker, Git, Postman, RESTful APIs.\n- Cả hai CV đều nêu rõ mục tiêu của ứng viên là đóng góp cho công ty thông qua trách nhiệm, học hỏi liên tục và hợp tác, đồng thời cải thiện kỹ năng chuyên môn trong một môi trường làm việc thực tế.\n- Cả hai CV đều đề cập đến các kỹ thuật như Spring Security với JWT authentication, RBAC (Role-Based Access Control) bằng cách sử dụng interceptor-based authorization, và unit testing với Spring Test và JUnit.\n- Cả hai CV đều nêu rõ mục tiêu của ứng viên là thích ứng với yêu cầu mới và cố gắng đáp ứng mong đợi một cách tốt nhất.\n- Cả hai CV đều đề cập đến các dự án như Mini Shop Management System, trong đó có các chức năng như quản lý sản phẩm, xử lý đơn hàng và quản lý kho hàng tự động hóa dựa trên số lượng nhập hàng và đơn hàng.\n\nNgữ cảnh mới:\n[1] Nguyen Minh Truc\nHo Chi Minh City, Việt Nam\nminhtruc25012004@gmail.com — 03783-8976\nGitHub\nAbout Me\nDesired Position: Backend Developer Intern I am an Information Technology student applying for a Backend Developer position. My goal is to contribute to the company through responsibility, continuous learning, and teamwork, while improving my professional skills in a real working environment. I am willing to adapt to new requirements and continuously strive to meet expectations.\nTechnologies\nLanguages: Java, JavaScript, TypeScript,\nFrameworks: Spring Boot, NestJS, ReactJS, NextJS\nDatabases: MySQL, PostgreSQL\nTools: Docker, Git, Postman, RESTful APIs\nProjects\nMini Shop Management System\nThe Mini Shop Management System is designed to support sales, order processing, and inventory management for small businesses.\n1.1 Key Features\n•Product management: create, update, categorize products\n•Order management: handle order creation and status tracking\n\n[2] •Order management: handle order creation and status tracking\n•Inventory management: automatically updated based on stock-in and orders\n•A WS S3 integration for image storage\n1.2 Technical Highlights\n•Built with Spring Boot and RESTful APIs\n•Spring Security with JWT authentication\n•Role-based access control (RBAC) using interceptor-based authorization\n•MySQL for data persistence\n•Unit testing with Spring Test and JUnit\nSource Code:\n•Backend: https://github.com/Nguyen-Minh-Truc/MiniShop\n•Frontend: https://github.com/Nguyen-Minh-Truc/FE MiniShop\nLanguage: English\nEducation: Saigon University, Software Engineering (2022 – Present)\nGPA: 2.7 / 4.0\n\nCâu hỏi đã chuẩn hóa và tinh chỉnh:\n- Cả hai CV khác nhau chỗ nào",
+          "context_count": 2,
+          "source_summary": [
+            {
+              "document_id": "c4e2b51d-cae5-4d16-a69b-433266c8ef10",
+              "source": "CV-backend.pdf",
+              "file_type": "pdf",
+              "upload_date": "2026-04-21T08:43:12.494515+00:00",
+              "chunk_count": 2,
+              "avg_score": 0.1476,
+              "contribution_pct": 100.0,
+              "pages": [
+                1
+              ]
+            }
+          ],
+          "corag_trace": [
+            {
+              "round": 1,
+              "top_k": 6,
+              "retrieved_count": 2,
+              "context_count": 2,
+              "requested_rounds": 2,
+              "answer_preview": "Nội dung trả lời:\n\n- Cả hai CV đều liên quan đến ngành Công nghệ thông tin và ứng dụng cho một vị trí Backend Developer.\n\n- Cả hai CV đều đề cập đến kỹ năng sử dụng các ngôn ngữ lập trình như Java, JavaScript, TypeScript, Spring Boot, NestJ"
+            },
+            {
+              "round": 2,
+              "top_k": 8,
+              "retrieved_count": 2,
+              "context_count": 2,
+              "requested_rounds": 2,
+              "answer_preview": "Câu hỏi đã được chuẩn hóa và tinh chỉnh:\n\n2 CV khác nhau chỗ nào\n\nNgữ cảnh mới:\n[1] Nguyen Minh Truc\nHo Chi Minh City, Việt Nam\nminhtruc25012004@gmail.com — 03783-8976\nGitHub\nAbout Me\nDesired Position: Backend Developer Intern I am an Infor"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "da2330f8-4441-4704-9cac-f0dadd672611",
+      "source": "CV-backend-intern.pdf",
+      "file_type": "pdf",
+      "upload_date": "2026-04-21T08:43:12.494515+00:00",
+      "questions_count": 1,
+      "avg_rag_latency_sec": 6.1929,
+      "avg_corag_latency_sec": 27.2623,
+      "avg_similarity_ratio": 0.5577,
+      "avg_rag_retrieval_score": 0.1476,
+      "avg_corag_retrieval_score": 0.1476,
+      "question_results": [
+        {
+          "question": "2 cv khác nhau chỗ nào",
+          "retrieval_latency_sec": 0.2793,
+          "rag_latency_sec": 6.1929,
+          "corag_latency_sec": 27.2623,
+          "similarity_ratio": 0.5577,
+          "rag_answer": "Nội dung trả lời:\n\n- Cả hai CV đều liên quan đến ngành Công nghệ thông tin và ứng dụng cho một vị trí Backend Developer.\n\n- Cả hai CV đều đề cập đến kỹ năng sử dụng các ngôn ngữ lập trình như Java, JavaScript, TypeScript, Spring Boot, NestJS, ReactJS, NextJS, MySQL, PostgreSQL, Docker, Git, Postman, RESTful APIs.\n\n- Cả hai CV đều nêu rõ mục tiêu của ứng viên là đóng góp cho công ty thông qua trách nhiệm, học hỏi liên tục và hợp tác, đồng thời cải thiện kỹ năng chuyên môn trong một môi trường làm việc thực tế.\n\n- Cả hai CV đều đề cập đến các kỹ thuật như Spring Security với JWT authentication, RBAC (Role-Based Access Control) bằng cách sử dụng interceptor-based authorization, và unit testing với Spring Test và JUnit.\n\n- Cả hai CV đều nêu rõ mục tiêu của ứng viên là thích ứng với yêu cầu mới và cố gắng đáp ứng mong đợi một cách tốt nhất.\n\n- Cả hai CV đều đề cập đến các dự án như Mini Shop Management System, trong đó có các chức năng như quản lý sản phẩm, xử lý đơn hàng và quản lý kho hàng tự động hóa dựa trên số lượng nhập hàng và đơn hàng.",
+          "corag_answer": "Nội dung trả lời:\n\n- Cả hai CV đều liên quan đến ngành Công nghệ thông tin và ứng dụng cho một vị trí Backend Developer.\n\n- Cả hai CV đều đề cập đến kỹ năng sử dụng các ngôn ngữ lập trình như Java, JavaScript, TypeScript, Spring Boot, NestJS, ReactJS, NextJS, MySQL, PostgreSQL, Docker, Git, Postman, RESTful APIs.\n\n- Cả hai CV đều nêu rõ mục tiêu của ứng viên là đóng góp cho công ty thông qua trách nhiệm, học hỏi liên tục và hợp tác, đồng thời cải thiện kỹ năng chuyên môn trong một môi trường làm việc thực tế.\n\n- Cả hai CV đều đề cập đến các kỹ thuật như Spring Security với JWT authentication, RBAC (Role-Based Access Control) bằng cách sử dụng interceptor-based authorization, và unit testing với Spring Test và JUnit.\n\n- Cả hai CV đều nêu rõ mục tiêu của ứng viên là thích ứng với yêu cầu mới và cố gắng đáp ứng mong đợi một cách tốt nhất.\n\n- Cả hai CV đều đề cập đến các dự án như Mini Shop Management System, trong đó có các chức năng như quản lý sản phẩm, xử lý đơn hàng và quản lý kho hàng tự động hóa dựa trên số lượng nhập hàng và đơn hàng.\n\nNgữ cảnh mới:\n[1] Nguyen Minh Truc\nHo Chi Minh City\nminhtruc25012004@gmail.com — 03783-8976\nGitHub\nAbout Me\nDesired Position: Backend Developer Intern I am an Information Technology student applying for a\nBackend Developer position. My goal is to contribute to the company through responsibility, continuous\nlearning, and teamwork, while improving my professional skills in a real working environment. I am\nwilling to adapt to new requirements and continuously strive to meet expectations.\nTechnologies\nLanguages:Java, JavaScript, TypeScript,\nFrameworks:Spring Boot, NestJS, ReactJS, NextJS\nDatabases:MySQL, PostgreSQL\nTools:Docker, Git, Postman, RESTful APIs\nProjects\nMini Shop Management System\nThe Mini Shop Management System is designed to support sales, order processing, and inventory management for small businesses.\n1. Key Features\n•Product management: create, update, categorize products\n•Order management: handle order creation and status tracking\n\n[2] •Order management: handle order creation and status tracking\n•Inventory management: automatically updated based on stock-in and orders\n•WS S3 integration for image storage\n1. Technical Highlights\n•Built with Spring Boot and RESTful APIs\n•Spring Security with JWT authentication\n•Role-based access control (RBAC) using interceptor-based authorization\n•MySQL for data persistence\n•Unit testing with Spring Test and JUnit\n\nSource Code:\n•Backend: https://github.com/Nguyen-Minh-Truc/MiniShop\n•Frontend: https://github.com/Nguyen-Minh-Truc/FE MiniShop\nLanguage: English\nEducation: Saigon University\nSoftware Engineering (2022 – Present)\nGPA: 2.7 / 4.0\n\nCâu hỏi đã chuẩn hóa để tinh chỉnh:\n2 CV khác nhau chỗ nào?",
+          "context_count": 2,
+          "source_summary": [
+            {
+              "document_id": "da2330f8-4441-4704-9cac-f0dadd672611",
+              "source": "CV-backend-intern.pdf",
+              "file_type": "pdf",
+              "upload_date": "2026-04-21T08:43:12.494515+00:00",
+              "chunk_count": 2,
+              "avg_score": 0.1476,
+              "contribution_pct": 100.0,
+              "pages": [
+                1
+              ]
+            }
+          ],
+          "corag_trace": [
+            {
+              "round": 1,
+              "top_k": 6,
+              "retrieved_count": 2,
+              "context_count": 2,
+              "requested_rounds": 2,
+              "answer_preview": "Nội dung trả lời:\n\n- Cả hai CV đều liên quan đến ngành Công nghệ thông tin và ứng dụng cho một vị trí Backend Developer.\n\n- Cả hai CV đều đề cập đến kỹ năng sử dụng các ngôn ngữ lập trình như Java, JavaScript, TypeScript, Spring Boot, NestJ"
+            },
+            {
+              "round": 2,
+              "top_k": 8,
+              "retrieved_count": 2,
+              "context_count": 2,
+              "requested_rounds": 2,
+              "answer_preview": "Nội dung trả lời:\n\n- Cả hai CV đều liên quan đến ngành Công nghệ thông tin và ứng dụng cho một vị trí Backend Developer.\n\n- Cả hai CV đều đề cập đến kỹ năng sử dụng các ngôn ngữ lập trình như Java, JavaScript, TypeScript, Spring Boot, NestJ"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "documents_compared": 2,
+    "questions_per_document": 1,
+    "avg_similarity_ratio": 0.3772
+  }
+}

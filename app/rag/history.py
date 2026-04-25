@@ -57,6 +57,7 @@ def create_conversation(upload_filename: str) -> str:
     payload = {
         "conversation_id": conversation_id,
         "upload_filename": upload_filename,
+        "uploaded_documents": [],
         "created_at": now,
         "updated_at": now,
         "turn_count": 0,
@@ -86,6 +87,9 @@ def append_conversation_turn(
     context: list[dict],
     memory_context: list[dict] | None = None,
     resolved_question: str | None = None,
+    mode: str = "Compare",
+    metadata_filters: dict | None = None,
+    source_summary: list[dict] | None = None,
 ) -> dict:
     """Append one Q&A turn into an existing conversation."""
     history = load_conversation_history(conversation_id)
@@ -98,7 +102,10 @@ def append_conversation_turn(
         "resolved_question": resolved_question or question,
         "answer": answer,
         "corag_answer": corag_answer,
+        "mode": mode,
         "context": context,
+        "metadata_filters": metadata_filters or {},
+        "source_summary": source_summary or [],
         "memory_context": memory_context or [],
         "follow_up": bool(memory_context),
     }
@@ -122,6 +129,35 @@ def get_recent_turns(conversation_id: str, limit: int = 4) -> list[dict]:
     return _recent_turns(history.get("turns", []), limit=limit)
 
 
+def append_uploaded_documents(conversation_id: str, uploaded_documents: list[dict]) -> list[dict]:
+    """Append uploaded document metadata into one conversation."""
+    if not uploaded_documents:
+        return []
+
+    history = load_conversation_history(conversation_id)
+    existing_docs = list(history.get("uploaded_documents", []))
+    seen_ids = {str(doc.get("document_id", "")) for doc in existing_docs}
+
+    for doc in uploaded_documents:
+        document_id = str(doc.get("document_id", ""))
+        if document_id and document_id in seen_ids:
+            continue
+
+        existing_docs.append(doc)
+        if document_id:
+            seen_ids.add(document_id)
+
+    history["uploaded_documents"] = existing_docs
+    history["updated_at"] = _utc_now_iso()
+
+    _conversation_path(conversation_id).write_text(
+        json.dumps(history, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+
+    return existing_docs
+
+
 def list_conversations() -> list[dict]:
     """Return conversation summaries sorted by newest conversation id first."""
     summaries: list[dict] = []
@@ -135,6 +171,7 @@ def list_conversations() -> list[dict]:
             {
                 "conversation_id": payload.get("conversation_id", path.stem),
                 "upload_filename": payload.get("upload_filename", ""),
+                "filename": payload.get("upload_filename", ""),
                 "created_at": payload.get("created_at"),
                 "updated_at": payload.get("updated_at"),
                 "turn_count": payload.get("turn_count", 0),

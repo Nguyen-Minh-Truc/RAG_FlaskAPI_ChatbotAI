@@ -7,6 +7,7 @@ import time
 import html
 import os
 import re
+from datetime import datetime
 import requests
 import streamlit as st
 
@@ -293,34 +294,6 @@ html, body, [data-testid="stApp"] {
     max-width: 90%;
 }
 
-/* ── CoRAG trace accordion ───────────────── */
-.trace-container {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 12px 16px;
-    margin-top: 10px;
-}
-.trace-step {
-    display: flex; gap: 10px; align-items: flex-start;
-    padding: 8px 0; border-bottom: 1px solid var(--border);
-    font-size: 12.5px;
-}
-.trace-step:last-child { border-bottom: none; }
-.trace-step .step-num {
-    background: var(--accent2bg);
-    color: var(--accent2);
-    border-radius: 50%;
-    width: 22px; height: 22px; min-width: 22px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px; font-weight: 700; font-family: var(--mono);
-}
-.trace-step .step-body { flex:1; }
-.trace-step .step-label {
-    font-size: 10px; font-weight: 700; letter-spacing: .1em;
-    text-transform: uppercase; color: var(--subtext); margin-bottom: 3px;
-}
-
 /* ── Conversation list ───────────────────── */
 .conv-item {
     padding: 9px 12px;
@@ -433,13 +406,27 @@ if "active_conv_id" not in st.session_state:
     st.session_state.active_conv_id = None
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []   # list of {question, rag_answer, corag_answer}
-if "api_status" not in st.session_state:
-    st.session_state.api_status = None   # True/False/None
 if "api_base" not in st.session_state:
     st.session_state.api_base = discover_api_base()
 
 if "question_box_version" not in st.session_state:
     st.session_state.question_box_version = 0
+if "use_hybrid_search" not in st.session_state:
+    st.session_state.use_hybrid_search = True
+if "ask_mode" not in st.session_state:
+    st.session_state.ask_mode = "Compare"
+if "corag_rounds" not in st.session_state:
+    st.session_state.corag_rounds = 3
+if "available_documents" not in st.session_state:
+    st.session_state.available_documents = []
+if "selected_sources" not in st.session_state:
+    st.session_state.selected_sources = []
+if "selected_file_types" not in st.session_state:
+    st.session_state.selected_file_types = []
+if "filter_upload_date_from" not in st.session_state:
+    st.session_state.filter_upload_date_from = None
+if "filter_upload_date_to" not in st.session_state:
+    st.session_state.filter_upload_date_to = None
 
 # ─────────────────────────────────────────────
 #  HELPER — API CALLS
@@ -509,9 +496,37 @@ def _highlight_text(text: str, keywords: list[str]) -> str:
 
 
 def render_context_sources(context_chunks: list[dict], question: str, key_prefix: str):
-    """Render clickable source context blocks with keyword highlights."""
+    """Render source origins first; show raw context only when user requests it."""
     if not context_chunks:
         st.caption("Khong co context duoc luu cho luot hoi dap nay.")
+        return
+
+    st.markdown("#### Nguon goc thong tin")
+    for idx, chunk in enumerate(context_chunks, start=1):
+        metadata = chunk.get("metadata", {}) or {}
+        source = metadata.get("source") or "unknown"
+        page = metadata.get("page")
+        chunk_index = metadata.get("chunk_index")
+        score = float(chunk.get("score", 0.0))
+
+        st.markdown(
+            f"""
+            <div class="info-box" style="margin-top:8px;">
+                <strong>[{idx}] {esc(source)}</strong><br>
+                Trang: <strong>{esc(page if page is not None else '?')}</strong> · Vi tri chunk: <strong>{esc(chunk_index if chunk_index is not None else '?')}</strong> · score: <strong>{score:.4f}</strong>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    show_raw_context = st.toggle(
+        "Xem context goc",
+        value=False,
+        key=f"{key_prefix}_show_raw_context",
+        help="Bat neu ban muon xem toan bo doan context da truy hoi.",
+    )
+
+    if not show_raw_context:
         return
 
     keywords = _extract_keywords(question)
@@ -552,10 +567,99 @@ def render_context_sources(context_chunks: list[dict], question: str, key_prefix
             )
 
 
-def check_health():
-    data, code = api("get", "/api/health", timeout=5)
-    st.session_state.api_status = (code == 200)
-    return st.session_state.api_status
+def render_source_summary(source_summary: list[dict], title: str = "Tai lieu dong gop"):
+    """Render document-level contribution summary."""
+    if not source_summary:
+        return
+
+    st.markdown(f"#### {title}")
+    for item in source_summary:
+        source = item.get("source", "unknown")
+        file_type = item.get("file_type") or "unknown"
+        chunk_count = item.get("chunk_count", 0)
+        contribution = item.get("contribution_pct", 0)
+        avg_score = item.get("avg_score", 0)
+        pages = item.get("pages", [])
+        upload_date = item.get("upload_date") or "unknown"
+
+        pages_text = ", ".join(str(page) for page in pages[:8]) if pages else "-"
+        st.markdown(
+            f"""
+            <div class="info-box" style="margin-top:8px;">
+                <strong>{esc(source)}</strong> ({esc(file_type)})<br>
+                Chunk dong gop: <strong>{esc(chunk_count)}</strong> · Ti le: <strong>{esc(contribution)}%</strong> · Avg score: <strong>{esc(avg_score)}</strong><br>
+                Trang lien quan: {esc(pages_text)}<br>
+                Upload: {esc(upload_date)}
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+
+def _extract_filter_options(uploaded_documents: list[dict]) -> tuple[list[str], list[str]]:
+    """Build unique metadata filter options from uploaded document metadata."""
+    sources: set[str] = set()
+    file_types: set[str] = set()
+
+    for item in uploaded_documents:
+        source = str(item.get("source") or "").strip()
+        file_type = str(item.get("file_type") or "").strip().lower()
+        if source:
+            sources.add(source)
+        if file_type:
+            file_types.add(file_type)
+
+    return sorted(sources), sorted(file_types)
+
+
+def _to_iso_day_start(date_text: str) -> str:
+    return f"{date_text}T00:00:00+00:00"
+
+
+def _to_iso_day_end(date_text: str) -> str:
+    return f"{date_text}T23:59:59+00:00"
+
+
+def _date_for_widget(date_text: str | None):
+    """Convert YYYY-MM-DD string from session state to date object for date_input."""
+    if not date_text:
+        return None
+
+    try:
+        return datetime.strptime(date_text, "%Y-%m-%d").date()
+    except ValueError:
+        return None
+
+
+def build_active_metadata_filters() -> dict:
+    """Build metadata filter payload from sidebar controls."""
+    return {
+        "sources": st.session_state.selected_sources,
+        "file_types": st.session_state.selected_file_types,
+        "document_ids": [],
+        "upload_date_from": _to_iso_day_start(st.session_state.filter_upload_date_from)
+        if st.session_state.filter_upload_date_from
+        else None,
+        "upload_date_to": _to_iso_day_end(st.session_state.filter_upload_date_to)
+        if st.session_state.filter_upload_date_to
+        else None,
+    }
+
+
+def validate_filter_dates() -> str | None:
+    """Validate date filter fields and return error message when invalid."""
+    for field_name, field_value in (
+        ("from", st.session_state.filter_upload_date_from),
+        ("to", st.session_state.filter_upload_date_to),
+    ):
+        if not field_value:
+            continue
+        try:
+            datetime.strptime(field_value, "%Y-%m-%d")
+        except ValueError:
+            return f"Upload date {field_name} khong dung dinh dang YYYY-MM-DD."
+
+    return None
 
 
 def list_conversations():
@@ -572,6 +676,13 @@ def get_conversation(cid: str):
     return {}
 
 
+def get_conversation_documents(cid: str):
+    data, code = api("get", f"/api/conversations/{cid}/documents", timeout=10)
+    if code == 200:
+        return data.get("data", {}).get("documents", [])
+    return []
+
+
 def delete_conversation(cid: str):
     _, code = api("delete", f"/api/conversations/{cid}", timeout=10)
     return code == 200
@@ -582,31 +693,62 @@ def delete_all_conversations():
     return code == 200
 
 
-def upload_file(file_bytes, filename: str, chunk_size: int, chunk_overlap: int):
+def upload_file(uploaded_files, chunk_size: int, chunk_overlap: int, conversation_id: str | None = None):
+    files_payload = []
+    for uploaded_file in uploaded_files:
+        files_payload.append(
+            (
+                "files",
+                (
+                    uploaded_file.name,
+                    uploaded_file.read(),
+                    uploaded_file.type or "application/octet-stream",
+                ),
+            )
+        )
+
+    form_data = {
+        "chunk_size": str(chunk_size),
+        "chunk_overlap": str(chunk_overlap),
+    }
+    if conversation_id:
+        form_data["conversation_id"] = conversation_id
+
     data, code = api(
         "post", "/api/upload",
-        timeout=180,
-        files={"file": (filename, file_bytes, "application/octet-stream")},
-        data={"chunk_size": str(chunk_size), "chunk_overlap": str(chunk_overlap)},
+        timeout=300,
+        files=files_payload,
+        data=form_data,
     )
     return data, code
 
 
-def ask_question(question: str, conv_id: str, corag_rounds: int, use_hybrid_search: bool):
+def ask_question(
+    question: str,
+    conv_id: str,
+    corag_rounds: int,
+    use_hybrid_search: bool,
+    ask_mode: str,
+    metadata_filters: dict,
+):
+    endpoint = {
+        "RAG": "/api/rag-ask",
+        "Co-RAG": "/api/corag-ask",
+        "Compare": "/api/ask",
+    }.get(ask_mode, "/api/ask")
+
     data, code = api(
-        "post", "/api/ask",
+        "post", endpoint,
         timeout=300,
         json={
             "question": question,
             "conversation_id": conv_id,
             "corag_rounds": corag_rounds,
             "use_hybrid_search": use_hybrid_search,
+            "metadata_filters": metadata_filters,
         },
     )
     return data, code
-
-
-DEFAULT_CORAG_ROUNDS = 1
 
 
 # ─────────────────────────────────────────────
@@ -632,50 +774,30 @@ with st.sidebar:
         unsafe_allow_html=True,
     )
 
-    # ── API status ───────────────────────────
-    st.markdown('<div class="sidebar-section">🔌 Trang thai may chu</div>', unsafe_allow_html=True)
-    current_api_base = st.text_input(
-        "Dia chi API",
-        value=st.session_state.api_base,
-        key="api_base_input",
-        help="Vi du: http://127.0.0.1:5000",
-    ).strip()
-    if current_api_base and current_api_base.rstrip("/") != st.session_state.api_base:
-        st.session_state.api_base = current_api_base.rstrip("/")
-        st.session_state.api_status = None
-
-    col_s, col_b = st.columns([3, 2])
-    with col_s:
-        if st.session_state.api_status is True:
-            st.markdown('<span class="status-pill status-ok">● Dang hoat dong</span>', unsafe_allow_html=True)
-        elif st.session_state.api_status is False:
-            st.markdown('<span class="status-pill status-err">● Mat ket noi</span>', unsafe_allow_html=True)
-        else:
-            st.markdown('<span class="status-pill status-off">● Chua kiem tra</span>', unsafe_allow_html=True)
-    with col_b:
-        if st.button("Kiem tra", key="btn_health", use_container_width=True):
-            ok = check_health()
-            if ok:
-                st.toast(f"✅ API hoat dong on dinh: {st.session_state.api_base}", icon="✅")
-            else:
-                st.toast(f"❌ Khong the ket noi API: {st.session_state.api_base}", icon="❌")
-
-    st.session_state.setdefault("use_hybrid_search", True)
-    st.session_state.use_hybrid_search = st.checkbox(
-        "Hybrid search",
-        value=st.session_state.use_hybrid_search,
-        help="Bat/tat ket hop FAISS + BM25 cho ca RAG va Co-RAG.",
-    )
-    st.caption(
-        f"Che do hien tai: {'Hybrid (FAISS + BM25)' if st.session_state.use_hybrid_search else 'Vector-only (FAISS)'}"
+    # Force hybrid search on for all requests.
+    st.session_state.use_hybrid_search = True
+ 
+    st.markdown('<div class="sidebar-section">🧠 Che do hoi dap</div>', unsafe_allow_html=True)
+    st.session_state.corag_rounds = 3
+    st.session_state.ask_mode = st.selectbox(
+        "Che do hoi dap",
+        options=["Compare", "RAG", "Co-RAG"],
+        index=["Compare", "RAG", "Co-RAG"].index(st.session_state.ask_mode),
+        help="Compare: tra ve ca RAG va Co-RAG, RAG/Co-RAG: chi chay 1 luong.",
     )
 
     # ── Upload ───────────────────────────────
     st.markdown('<div class="sidebar-section">📂 Tai tai lieu</div>', unsafe_allow_html=True)
-    uploaded = st.file_uploader(
+    uploaded_files = st.file_uploader(
         "Tha file vao day",
         type=["pdf", "doc", "docx"],
+        accept_multiple_files=True,
         label_visibility="collapsed",
+    )
+    append_to_current = st.checkbox(
+        "Append vao hoi thoai hien tai",
+        value=False,
+        help="Neu bat, tai lieu moi se duoc them vao hoi thoai dang chon thay vi tao hoi thoai moi.",
     )
     chunk_size_option = st.selectbox(
         "Chunk size",
@@ -692,28 +814,34 @@ with st.sidebar:
     do_upload = st.button("⬆ Nap tai lieu", key="btn_upload", use_container_width=True, type="primary")
 
     if do_upload:
-        if uploaded is None:
-            st.warning("Vui long chon file truoc.")
+        if not uploaded_files:
+            st.warning("Vui long chon it nhat mot file truoc.")
+        elif append_to_current and not st.session_state.active_conv_id:
+            st.warning("Khong co hoi thoai dang chon de append.")
         else:
             with st.spinner("Dang nap du lieu..."):
                 data, code = upload_file(
-                    uploaded.read(),
-                    uploaded.name,
+                    uploaded_files,
                     chunk_size=chunk_size_option,
                     chunk_overlap=chunk_overlap_option,
+                    conversation_id=st.session_state.active_conv_id if append_to_current else None,
                 )
             if code == 200:
                 info = data.get("data", {})
                 st.session_state.active_conv_id = info.get("conversation_id")
                 st.session_state.chat_history = []
+                st.session_state.available_documents = info.get("uploaded_documents", [])
                 st.toast(
                     (
                         "✅ Da lap chi muc "
-                        f"{info.get('chunks', '?')} doan tu {info.get('documents', '?')} trang "
+                        f"{info.get('chunks', '?')} doan tu {info.get('document_count', '?')} tai lieu "
                         f"(chunk_size={info.get('chunk_size', '?')}, overlap={info.get('chunk_overlap', '?')})."
                     ),
                     icon="📄",
                 )
+                parse_errors = info.get("parse_errors", [])
+                if parse_errors:
+                    st.warning(f"Co {len(parse_errors)} file khong parse duoc. Kiem tra lai dinh dang/noi dung file.")
                 st.rerun()
             else:
                 detail = (data.get("error") or {}).get("detail") if isinstance(data.get("error"), dict) else None
@@ -733,6 +861,9 @@ with st.sidebar:
         # Auto-select first
         if st.session_state.active_conv_id is None:
             st.session_state.active_conv_id = str(convs[0].get("conversation_id"))
+
+        if st.session_state.active_conv_id and not st.session_state.available_documents:
+            st.session_state.available_documents = get_conversation_documents(st.session_state.active_conv_id)
 
         for conv in convs:
             cid   = str(conv.get("conversation_id", ""))
@@ -755,10 +886,14 @@ with st.sidebar:
                             "question": t.get("question", ""),
                             "rag_answer": t.get("answer", ""),
                             "corag_answer": t.get("corag_answer", ""),
+                            "mode": t.get("mode", "Compare"),
                             "context": t.get("context", []),
+                            "source_summary": t.get("source_summary", []),
+                            "metadata_filters": t.get("metadata_filters", {}),
                         }
                         for t in detail.get("turns", [])
                     ]
+                    st.session_state.available_documents = get_conversation_documents(cid)
                     st.rerun()
             with cols[1]:
                 if st.button("✕", key=f"del_{cid}", use_container_width=True):
@@ -774,9 +909,61 @@ with st.sidebar:
             if delete_all_conversations():
                 st.session_state.active_conv_id = None
                 st.session_state.chat_history = []
+                st.session_state.available_documents = []
                 st.toast("Da xoa toan bo hoi thoai.", icon="🗑")
                 st.rerun()
 
+    st.markdown('<div class="sidebar-section">🧩 Metadata filter</div>', unsafe_allow_html=True)
+    source_options, file_type_options = _extract_filter_options(st.session_state.available_documents)
+    active_filter_count = (
+        len(st.session_state.selected_sources)
+        + len(st.session_state.selected_file_types)
+        + (1 if st.session_state.filter_upload_date_from else 0)
+        + (1 if st.session_state.filter_upload_date_to else 0)
+    )
+
+    with st.popover(f"Mo bo loc metadata ({active_filter_count})", use_container_width=True):
+        st.session_state.selected_sources = st.multiselect(
+            "Loc theo ten file",
+            options=source_options,
+            default=[value for value in st.session_state.selected_sources if value in source_options],
+            help="Chi truy hoi chunk tu cac file duoc chon.",
+        )
+        st.session_state.selected_file_types = st.multiselect(
+            "Loc theo loai file",
+            options=file_type_options,
+            default=[value for value in st.session_state.selected_file_types if value in file_type_options],
+            help="Vi du: pdf, doc, docx.",
+        )
+        date_col1, date_col2 = st.columns(2)
+        with date_col1:
+            upload_date_from = st.date_input(
+                "Upload date from",
+                value=_date_for_widget(st.session_state.filter_upload_date_from),
+                format="YYYY-MM-DD",
+                help="De trong neu khong loc theo ngay bat dau.",
+            )
+        with date_col2:
+            upload_date_to = st.date_input(
+                "Upload date to",
+                value=_date_for_widget(st.session_state.filter_upload_date_to),
+                format="YYYY-MM-DD",
+                help="De trong neu khong loc theo ngay ket thuc.",
+            )
+
+        st.session_state.filter_upload_date_from = (
+            upload_date_from.strftime("%Y-%m-%d") if upload_date_from else None
+        )
+        st.session_state.filter_upload_date_to = (
+            upload_date_to.strftime("%Y-%m-%d") if upload_date_to else None
+        )
+
+        if st.button("Xoa bo loc", use_container_width=True):
+            st.session_state.selected_sources = []
+            st.session_state.selected_file_types = []
+            st.session_state.filter_upload_date_from = None
+            st.session_state.filter_upload_date_to = None
+            st.rerun()
 
 # ─────────────────────────────────────────────
 #  MAIN CONTENT AREA
@@ -848,6 +1035,8 @@ with tab_chat:
                 rag_answer = item.get("rag_answer")
                 corag_answer = item.get("corag_answer")
                 context_chunks = item.get("context", [])
+                source_summary = item.get("source_summary", []) or []
+                item_mode = item.get("mode", "Compare")
                 safe_rag = esc(rag_answer) if rag_answer else '<em style="color:var(--subtext)">—</em>'
                 safe_corag = esc(corag_answer) if corag_answer else '<em style="color:var(--subtext)">—</em>'
                 st.markdown(
@@ -862,8 +1051,7 @@ with tab_chat:
                     unsafe_allow_html=True,
                 )
                 with st.expander("📬 Xem cau tra loi", expanded=(item == st.session_state.chat_history[-1])):
-                    c1, c2 = st.columns(2, gap="medium")
-                    with c1:
+                    if item_mode == "RAG":
                         st.markdown(
                             f"""
                             <div class="answer-card rag">
@@ -873,7 +1061,7 @@ with tab_chat:
                             """,
                             unsafe_allow_html=True,
                         )
-                    with c2:
+                    elif item_mode == "Co-RAG":
                         st.markdown(
                             f"""
                             <div class="answer-card corag">
@@ -883,8 +1071,31 @@ with tab_chat:
                             """,
                             unsafe_allow_html=True,
                         )
+                    else:
+                        c1, c2 = st.columns(2, gap="medium")
+                        with c1:
+                            st.markdown(
+                                f"""
+                                <div class="answer-card rag">
+                                    <div class="card-label rag">🔵 RAG tieu chuan</div>
+                                    {safe_rag}
+                                </div>
+                                """,
+                                unsafe_allow_html=True,
+                            )
+                        with c2:
+                            st.markdown(
+                                f"""
+                                <div class="answer-card corag">
+                                    <div class="card-label corag">🟢 Co-RAG (lap)</div>
+                                    {safe_corag}
+                                </div>
+                                """,
+                                unsafe_allow_html=True,
+                            )
 
-                    st.markdown("#### Nguon thong tin va context goc")
+                    render_source_summary(source_summary)
+
                     render_context_sources(
                         context_chunks=context_chunks,
                         question=item.get("question", ""),
@@ -923,12 +1134,21 @@ with tab_chat:
             elif not st.session_state.active_conv_id:
                 st.error("Không co hoi thoai dang hoat dong. Hay tai tai lieu truoc.")
             else:
+                date_error = validate_filter_dates()
+                if date_error:
+                    st.error(date_error)
+                    st.stop()
+
+                metadata_filters = build_active_metadata_filters()
+
                 with st.spinner("Đang suy nghi..."):
                     resp, code = ask_question(
                         question.strip(),
                         st.session_state.active_conv_id,
-                        DEFAULT_CORAG_ROUNDS,
+                        st.session_state.corag_rounds,
                         st.session_state.use_hybrid_search,
+                        st.session_state.ask_mode,
+                        metadata_filters,
                     )
 
                 if code == 200:
@@ -937,7 +1157,10 @@ with tab_chat:
                         "question":     question.strip(),
                         "rag_answer":   d.get("rag_answer", ""),
                         "corag_answer": d.get("corag_answer", ""),
+                        "mode":         d.get("mode", st.session_state.ask_mode),
                         "context":      d.get("context", []),
+                        "source_summary": d.get("source_summary", []),
+                        "metadata_filters": d.get("metadata_filters", metadata_filters),
                         "use_hybrid_search": d.get("use_hybrid_search", st.session_state.use_hybrid_search),
                     })
                     st.session_state.question_box_version += 1
@@ -1014,6 +1237,7 @@ with tab_history:
                     q = turn.get("question", "")
                     a = turn.get("answer", "")
                     ca = turn.get("corag_answer", "")
+                    source_summary = turn.get("source_summary", [])
                     tid = turn.get("turn_id", "")
                     safe_tid = esc(tid)
                     safe_q = esc(q)
@@ -1053,7 +1277,8 @@ with tab_history:
                         unsafe_allow_html=True,
                     )
 
-                    st.markdown("#### Nguon thong tin va context goc")
+                    render_source_summary(source_summary)
+
                     render_context_sources(
                         context_chunks=turn.get("context", []),
                         question=q,

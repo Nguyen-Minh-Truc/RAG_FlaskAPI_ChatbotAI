@@ -2,6 +2,7 @@
 
 from pathlib import Path
 from tempfile import NamedTemporaryFile
+from typing import Any
 
 from langchain_community.document_loaders import UnstructuredFileLoader
 from pypdf import PdfReader
@@ -11,9 +12,25 @@ from werkzeug.datastructures import FileStorage
 SUPPORTED_UPLOAD_EXTENSIONS = {".pdf", ".doc", ".docx"}
 
 
-def _load_pdf(uploaded_file: FileStorage) -> list[dict]:
+def _normalize_document_metadata(uploaded_file: FileStorage, extension: str, metadata: dict[str, Any] | None) -> dict:
+    """Build a normalized document-level metadata object."""
+    base_metadata: dict[str, Any] = {
+        "source": uploaded_file.filename,
+        "file_type": extension.lstrip("."),
+        "content_type": uploaded_file.content_type,
+    }
+
+    if metadata:
+        base_metadata.update(metadata)
+
+    return base_metadata
+
+
+def _load_pdf(uploaded_file: FileStorage, document_metadata: dict[str, Any] | None = None) -> list[dict]:
     """Load PDF content page by page."""
     uploaded_file.stream.seek(0)
+    extension = Path(uploaded_file.filename or "").suffix.lower()
+    normalized_metadata = _normalize_document_metadata(uploaded_file, extension, document_metadata)
 
     reader = PdfReader(uploaded_file.stream)
     documents: list[dict] = []
@@ -29,9 +46,8 @@ def _load_pdf(uploaded_file: FileStorage) -> list[dict]:
             {
                 "text": cleaned_text,
                 "metadata": {
-                    "source": uploaded_file.filename,
+                    **normalized_metadata,
                     "page": page_number,
-                    "content_type": uploaded_file.content_type,
                 },
             }
         )
@@ -39,10 +55,15 @@ def _load_pdf(uploaded_file: FileStorage) -> list[dict]:
     return documents
 
 
-def _load_word(uploaded_file: FileStorage, extension: str) -> list[dict]:
+def _load_word(
+    uploaded_file: FileStorage,
+    extension: str,
+    document_metadata: dict[str, Any] | None = None,
+) -> list[dict]:
     """Load DOC/DOCX content using Unstructured loader."""
     uploaded_file.stream.seek(0)
     file_bytes = uploaded_file.read()
+    normalized_metadata = _normalize_document_metadata(uploaded_file, extension, document_metadata)
 
     with NamedTemporaryFile(suffix=extension, delete=False) as temp_file:
         temp_file.write(file_bytes)
@@ -62,9 +83,8 @@ def _load_word(uploaded_file: FileStorage, extension: str) -> list[dict]:
                 {
                     "text": text,
                     "metadata": {
-                        "source": uploaded_file.filename,
+                        **normalized_metadata,
                         "part": idx,
-                        "content_type": uploaded_file.content_type,
                         **(doc.metadata or {}),
                     },
                 }
@@ -75,7 +95,10 @@ def _load_word(uploaded_file: FileStorage, extension: str) -> list[dict]:
         Path(temp_path).unlink(missing_ok=True)
 
 
-def load_uploaded_document(uploaded_file: FileStorage) -> list[dict]:
+def load_uploaded_document(
+    uploaded_file: FileStorage,
+    document_metadata: dict[str, Any] | None = None,
+) -> list[dict]:
     """
     Primary ingestion path for this project: load uploaded file from user request.
 
@@ -94,9 +117,9 @@ def load_uploaded_document(uploaded_file: FileStorage) -> list[dict]:
         raise ValueError("Only .pdf, .doc and .docx files are supported")
 
     if extension == ".pdf":
-        return _load_pdf(uploaded_file)
+        return _load_pdf(uploaded_file, document_metadata=document_metadata)
 
-    return _load_word(uploaded_file, extension)
+    return _load_word(uploaded_file, extension, document_metadata=document_metadata)
 
 
 # def load_local_documents() -> list[dict]:

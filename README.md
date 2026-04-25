@@ -4,6 +4,7 @@ Do an nay la chatbot hoi dap tren tai lieu noi bo, su dung:
 
 - RAG (Retrieval-Augmented Generation)
 - Co-RAG (vong tinh chinh cau tra loi)
+- Multi-document RAG voi metadata filtering (AND)
 - Ollama + Qwen chay local (khong can API key)
 
 README nay duoc viet lai de nguoi moi co the clone repo va chay ngay.
@@ -11,7 +12,7 @@ README nay duoc viet lai de nguoi moi co the clone repo va chay ngay.
 ## 1. Tong quan he thong
 
 - Backend: Flask API (`main.py`)
-- Frontend: Streamlit UI (`streamlit_app.py`)
+- Frontend: Streamlit UI (`app.py`)
 - Vector store: FAISS luu tai `storage/vectorstore`
 - Lich su hoi thoai: JSON luu tai `storage/conversations`
 - Dinh dang file ho tro: `.pdf`, `.doc`, `.docx`
@@ -19,7 +20,7 @@ README nay duoc viet lai de nguoi moi co the clone repo va chay ngay.
 ## 2. Cau truc thu muc chinh
 
 - `main.py`: entry point Flask
-- `streamlit_app.py`: giao dien Streamlit
+- `app.py`: giao dien Streamlit
 - `app/api/routes.py`: cac endpoint API
 - `app/rag/loader.py`: doc file upload PDF/DOC/DOCX
 - `app/rag/chunker.py`: chia chunk
@@ -102,7 +103,7 @@ Mac dinh API: `http://127.0.0.1:5000`
 ### Terminal 2: chay Streamlit UI
 
 ```bash
-streamlit run streamlit_app.py
+streamlit run app.py
 ```
 
 Mac dinh UI: `http://localhost:8501` (co the la 8502 neu 8501 dang duoc su dung)
@@ -111,11 +112,19 @@ Mac dinh UI: `http://localhost:8501` (co the la 8502 neu 8501 dang duoc su dung)
 
 1. Mo Streamlit UI.
 2. Tai len file `.pdf`, `.doc` hoac `.docx`.
+
+- Co the tai nhieu file cung luc.
+- Co the append vao hoi thoai dang chon.
+
 3. Dat cau hoi trong o input.
-4. He thong tra ve 2 ket qua:
-   - RAG tieu chuan
-   - Co-RAG (da tinh chinh qua nhieu vong)
+4. Chon che do hoi dap trong sidebar:
+
+- `RAG`: chi tra loi bang luong RAG
+- `Co-RAG`: chi tra loi bang luong Co-RAG
+- `Compare`: tra ve ca 2 ket qua de doi chieu
+
 5. Xem lich su o tab History.
+6. Bat bo loc metadata o sidebar neu muon chi truy hoi theo mot nhom tai lieu.
 
 ## 8. Hybrid Search (FAISS + BM25)
 
@@ -182,12 +191,20 @@ Kiem tra service con song.
 ### `POST /api/upload`
 
 - Content-Type: `multipart/form-data`
-- Field: `file` (`.pdf/.doc/.docx`)
+- Field: `file` hoac `files` (`.pdf/.doc/.docx`)
 - Optional field: `chunk_size` (`500 | 1000 | 1500 | 2000`)
 - Optional field: `chunk_overlap` (`50 | 100 | 200`)
-- Tac vu: parse file -> chunk -> embedding -> save FAISS -> tao conversation
+- Optional field: `conversation_id` (neu muon append vao hoi thoai cu)
+- Tac vu: parse file(s) -> chunk -> embedding -> save/merge FAISS -> cap nhat metadata document
 
-### `POST /api/ask`
+Metadata luu cho moi document:
+
+- `document_id`
+- `source` (ten file)
+- `upload_date` (UTC ISO)
+- `file_type` (`pdf`, `doc`, `docx`)
+
+### `POST /api/rag-ask`
 
 Request body:
 
@@ -195,7 +212,69 @@ Request body:
 {
   "question": "Noi dung cau hoi",
   "conversation_id": "optional",
-  "corag_rounds": 3
+  "use_hybrid_search": true,
+  "metadata_filters": {
+    "sources": ["sales_q1.pdf"],
+    "file_types": ["pdf"],
+    "document_ids": [],
+    "upload_date_from": "2026-04-01T00:00:00+00:00",
+    "upload_date_to": "2026-04-30T23:59:59+00:00"
+  }
+}
+```
+
+Data tra ve:
+
+- `rag_answer`
+- `context`
+- `source_summary` (tong hop dong gop theo document)
+- `turn_id`, `conversation_id`
+
+### `POST /api/corag-ask`
+
+Request body:
+
+```json
+{
+  "question": "Noi dung cau hoi",
+  "conversation_id": "optional",
+  "corag_rounds": 2,
+  "use_hybrid_search": true,
+  "metadata_filters": {
+    "sources": ["sales_q1.pdf"],
+    "file_types": ["pdf"],
+    "document_ids": [],
+    "upload_date_from": "2026-04-01T00:00:00+00:00",
+    "upload_date_to": "2026-04-30T23:59:59+00:00"
+  }
+}
+```
+
+Data tra ve:
+
+- `corag_answer`
+- `corag_trace`
+- `context`
+- `source_summary` (tong hop dong gop theo document)
+- `turn_id`, `conversation_id`
+
+### `POST /api/ask` (backward-compatible compare endpoint)
+
+Request body:
+
+```json
+{
+  "question": "Noi dung cau hoi",
+  "conversation_id": "optional",
+  "corag_rounds": 2,
+  "use_hybrid_search": true,
+  "metadata_filters": {
+    "sources": [],
+    "file_types": [],
+    "document_ids": [],
+    "upload_date_from": null,
+    "upload_date_to": null
+  }
 }
 ```
 
@@ -204,6 +283,7 @@ Data tra ve:
 - `rag_answer`
 - `corag_answer`
 - `corag_trace`
+- `source_summary`
 - `turn_id`, `conversation_id`
 
 ### `GET /api/conversations`
@@ -236,7 +316,7 @@ kill -9 <PID>
 Kiem tra dung ten file:
 
 ```bash
-streamlit run streamlit_app.py
+streamlit run app.py
 ```
 
 Khong dung `straemlit_app.py` (sai chinh ta).

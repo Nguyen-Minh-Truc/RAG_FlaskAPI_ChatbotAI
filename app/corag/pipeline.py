@@ -5,7 +5,7 @@ from app.llm.llm_service import generate_corag_refined_answer
 from app.rag.retriever import retrieve_top_k_chunks
 
 
-DEFAULT_CORAG_ROUNDS = 1
+DEFAULT_CORAG_ROUNDS = 3
 
 
 def _dedupe_and_rank(chunks: list[dict], limit: int) -> list[dict]:
@@ -35,6 +35,7 @@ def generate_corag_answer(
     memory_turns: list[dict] | None = None,
     original_question: str | None = None,
     use_hybrid_search: bool | None = None,
+    metadata_filters: dict | None = None,
 ) -> tuple[str, list[dict], list[dict]]:
     """
     Generate answer with iterative corrective retrieval and per-round trace.
@@ -51,6 +52,7 @@ def generate_corag_answer(
     if rounds <= 0:
         raise ValueError("rounds must be greater than 0")
 
+    requested_rounds = rounds
     rounds = min(rounds, 6)
 
     working_context: list[dict] = list(base_chunks or [])
@@ -64,16 +66,12 @@ def generate_corag_answer(
         # Round 1: base_top_k * 2, Round 2: base_top_k * 2 + 2, Round 3: base_top_k * 2 + 4
         round_top_k = base_top_k * 2 + (round_no - 1) * 2
 
-        # Reuse the initial RAG context on the first Co-RAG pass to avoid a duplicate
-        # hybrid retrieval round for the same question.
-        if round_no == 1 and working_context:
-            retrieved_chunks = []
-        else:
-            retrieved_chunks = retrieve_top_k_chunks(
-                question=question,
-                top_k=round_top_k,
-                use_hybrid_search=use_hybrid_search,
-            )
+        retrieved_chunks = retrieve_top_k_chunks(
+            question=question,
+            top_k=round_top_k,
+            use_hybrid_search=use_hybrid_search,
+            metadata_filters=metadata_filters,
+        )
 
         merged: list[dict] = []
         merged.extend(working_context)
@@ -98,6 +96,7 @@ def generate_corag_answer(
                 "top_k": round_top_k,
                 "retrieved_count": len(retrieved_chunks),
                 "context_count": len(working_context),
+                "requested_rounds": requested_rounds,
                 "answer_preview": latest_answer[:240],
             }
         )
