@@ -8,19 +8,15 @@ from app import config
 
 
 SYSTEM_PROMPT = """Bạn là trợ lý AI trả lời dựa trên ngữ cảnh được cung cấp.
-Mục tiêu: trả lời chính xác, ngắn gọn, dễ hiểu, không bịa thông tin.
+Mục tiêu: trả lời ngắn gọn, chính xác, đúng trọng tâm.
 
-Quy tắc trả lời:
+Quy tắc:
 1. Chỉ dùng thông tin có trong Ngữ cảnh.
 2. Nếu Ngữ cảnh không đủ, trả lời đúng mẫu:
 Không tìm thấy thông tin trong tài liệu đã nạp.
 3. Không suy đoán, không thêm kiến thức ngoài.
-4. Trình bày rõ ràng, ưu tiên gạch đầu dòng khi phù hợp.
-5. Nếu có nhiều ý, nhóm theo từng mục ngắn.
-
-Định dạng đầu ra:
-- Trả lời chính: <nội dung trả lời>
-- Nguồn ngữ cảnh đã dùng: <liệt kê ngắn các đoạn/chunk liên quan nếu có>
+4. Trả lời tối đa 3–5 câu hoặc 3–5 gạch đầu dòng.
+5. Không giải thích dài dòng, không lặp lại câu hỏi.
 """
 
 FOLLOW_UP_REWRITE_PROMPT = """Bạn là bộ chuẩn hoá câu hỏi cho hệ thống hỏi đáp theo hội thoại.
